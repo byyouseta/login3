@@ -1,0 +1,17 @@
+body,
+html {
+    height: 100%;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("../adminlte/dist/img/boxed-bg.jpg");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely 
+    background-position: center;
+    background-size: cover;*/
+    background-repeat: repeat;
+}
