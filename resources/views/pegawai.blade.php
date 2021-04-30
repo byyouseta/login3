@@ -15,7 +15,7 @@
 		<div class="box">
 		<div class="box-header">
 		<div class="btn-group">
-                      <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</button>
+                      <a href="/pegawai/tambah" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</a>
                     </div>
 			<div class="box-tools">
 			<div class="input-group input-group-sm" style="width: 150px;">
@@ -58,76 +58,6 @@
 				</tr>
 				@endforeach
 			</tbody>
-			<tr>
-				<td>1</td>
-				<td>192206242040121001</td>
-				<td>Bayu S</td>
-				<td>Sragen</td>
-				<td>IT</td>
-				<td>085647290xxx</td>
-				<th>
-					<div class="btn-group">
-						<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-						<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    </div>
-				</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>192206242040121001</td>
-				<td>Bayu S</td>
-				<td>Sragen</td>
-				<td>IT</td>
-				<td>085647290xxx</td>
-				<th>
-					<div class="btn-group">
-						<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-						<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    </div>
-				</th>
-			</tr>
-			<tr>
-			<td>2</td>
-				<td>192206242040121001</td>
-				<td>Bayu S</td>
-				<td>Sragen</td>
-				<td>IT</td>
-				<td>085647290xxx</td>
-				<th>
-					<div class="btn-group">
-						<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-						<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    </div>
-				</th>
-			</tr>
-			<tr>
-			<td>3</td>
-				<td>192206242040121001</td>
-				<td>Bayu S</td>
-				<td>Sragen</td>
-				<td>IT</td>
-				<td>085647290xxx</td>
-				<th>
-					<div class="btn-group">
-						<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-						<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    </div>
-				</th>
-			</tr>
-			<tr>
-			<td>4</td>
-				<td>192206242040121001</td>
-				<td>Bayu S</td>
-				<td>Sragen</td>
-				<td>IT</td>
-				<td>085647290xxx</td>
-				<th>
-					<div class="btn-group">
-						<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-						<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    </div>
-				</th>
-			</tr>
 			</table>
 		</div>
 		<!-- /.box-body -->

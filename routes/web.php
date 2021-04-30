@@ -23,9 +23,27 @@ Auth::routes(['register' => false]);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/pegawai', 'PegawaiController@index');
+
 Route::get('/agenda', 'HomeController@agenda');
-Route::get('/unit', 'HomeController@unit');
+
 //Password
 Route::get('/password', 'PasswordController@index');
 Route::post('/password/ganti', 'PasswordController@change');
+//Pegawai
+Route::get('/pegawai', 'PegawaiController@index');
+Route::get('/pegawai/tambah', 'PegawaiController@tambah');
+Route::post('/pegawai/tambahpegawai', 'PegawaiController@tambahpegawai');
+//Unit
+Route::get('/unit', 'UnitController@index');
+Route::get('/unit/tambah', 'UnitController@tambah');
+Route::post('/unit/tambahunit', 'UnitController@tambahunit');
+Route::get('/unit/edit/{id}', 'UnitController@edit');
+Route::put('/unit/update/{id}', 'UnitController@update');
+Route::get('/unit/hapus/{id}', 'UnitController@delete');
+//Ruangan
+Route::get('/ruangan', 'RuanganController@index');
+Route::get('/ruangan/tambah', 'RuanganController@tambah');
+Route::post('/ruangan/tambahruangan', 'RuanganController@tambahruangan');
+Route::get('/ruangan/edit/{id}', 'RuanganController@edit');
+Route::put('/ruangan/update/{id}', 'RuanganController@update');
+Route::get('/ruangan/hapus/{id}', 'RuanganController@delete');

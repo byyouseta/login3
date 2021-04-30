@@ -15,7 +15,7 @@
 		<div class="box">
 		<div class="box-header">
 		<div class="btn-group">
-			<a href="/unit/tambah" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</a>
+			<a href="/ruangan/tambah" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</a>
 		</div>
 			<div class="box-tools">
 			<div class="input-group input-group-sm" style="width: 150px;">
@@ -33,20 +33,22 @@
 				
 			<tr>
 				<th>No</th>
-				<th>Nama Unit</th>
+				<th>Nama Ruangan</th>
+				<th>Lokasi</th>
                 <th>Keterangan</th>
 				<th>Action</th>
 			</tr>
-			@foreach($unit as $u)
+			@foreach($ruangan as $r)
 				<tr>
 					<td>{{ $no++ }}</td>
-					<td>{{ $u->nama_unit }}</td>
-					<td>{{ $u->keterangan }}</td>
+					<td>{{ $r->nama }}</td>
+					<td>{{ $r->lokasi }}</td>
+					<td>{{ $r->keterangan }}</td>
 					<td>
-					<div class="btn-group">
-						<a href="/unit/edit/{{ $u->id }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-						<a href="/unit/hapus/{{ $u->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
-					</div>
+						<div class="btn-group">
+							<a href="/ruangan/edit/{{ $r->id }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+							<a href="/ruangan/hapus/{{ $r->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+						</div>
 					</td>
 				</tr>
 			@endforeach
