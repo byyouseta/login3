@@ -13,7 +13,7 @@
             @csrf
             <div class="box-body">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Password lama</label>
+                    <label for="passwordlama">Password lama</label>
                     <input type="password" class="form-control" name="password" placeholder="Password Lama">
                 </div>
 
@@ -24,7 +24,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password Baru</label>
+                    <label for="passwordbaru">Password Baru</label>
                     <input type="password" class="form-control" name="password_new" placeholder="Password Baru">
                 </div>
 
@@ -35,7 +35,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Ulangi Password Baru</label>
+                    <label for="ulangi passwordbaru">Ulangi Password Baru</label>
                     <input type="password" class="form-control" name="password_confirmation" placeholder="Ulangi Password Baru">
                 </div>
 

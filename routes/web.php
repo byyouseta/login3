@@ -24,8 +24,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/agenda', 'HomeController@agenda');
-
 //Password
 Route::get('/password', 'PasswordController@index');
 Route::post('/password/ganti', 'PasswordController@change');
@@ -33,6 +31,9 @@ Route::post('/password/ganti', 'PasswordController@change');
 Route::get('/pegawai', 'PegawaiController@index');
 Route::get('/pegawai/tambah', 'PegawaiController@tambah');
 Route::post('/pegawai/tambahpegawai', 'PegawaiController@tambahpegawai');
+Route::get('/pegawai/edit/{id}', 'PegawaiController@edit');
+Route::post('/pegawai/update/{id}', 'PegawaiController@update');
+Route::get('/pegawai/hapus/{id}', 'PegawaiController@delete');
 //Unit
 Route::get('/unit', 'UnitController@index');
 Route::get('/unit/tambah', 'UnitController@tambah');
@@ -47,3 +48,7 @@ Route::post('/ruangan/tambahruangan', 'RuanganController@tambahruangan');
 Route::get('/ruangan/edit/{id}', 'RuanganController@edit');
 Route::put('/ruangan/update/{id}', 'RuanganController@update');
 Route::get('/ruangan/hapus/{id}', 'RuanganController@delete');
+//Agenda
+Route::get('/agenda', 'AgendaController@index');
+Route::get('/agenda/tambah', 'AgendaController@tambah');
+Route::post('/agenda/tambahagenda', 'AgendaController@tambahagenda');

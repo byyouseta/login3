@@ -22,6 +22,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{asset('adminlte/dist/css/skins/skin-blue.min.css')}}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -169,7 +175,34 @@ desired effect
 <script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/dist/js/adminlte.min.js')}}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<!-- bootstrap time picker -->
+<script src="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 
+<script>
+  $(function () {
+    //Date picker
+    $('#datepicker').datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      todayHighlight: true,
+      orientation: "auto"
+    })
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      timeFormat: 'hh:mm',
+      use24hours: true,
+      pickDate: false,
+      showInputs: false,
+      interval:30,
+      
+      pickTime: true,
+      
+    })
+  })
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->

@@ -16,4 +16,8 @@ class Ruangan extends Model
     protected $fillable = [
         'nama', 'lokasi', 'keterangan', 
     ];
+
+    public function agenda() { 
+        return $this->hasOne('App\Agenda'); 
+    }
 }

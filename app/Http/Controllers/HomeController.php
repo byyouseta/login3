@@ -28,11 +28,4 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function pegawai(){
-		return view('pegawai');
-	}
-
-    public function agenda(){
-		return view('agenda');
-	}
 }

@@ -69,4 +69,46 @@ class PegawaiController extends Controller
 
     	return redirect('/pegawai');
     }
+
+    public function delete($id)
+    {
+        $pegawai = User::find($id);
+        $pegawai->delete();
+
+        return redirect('/pegawai');
+    }
+
+    public function edit($id)
+    {
+        $pegawai = User::find($id);
+        $unit = Unit::all();
+        return view('pegawai_edit', ['pegawai' => $pegawai, 'unit' => $unit]);
+    }
+
+    public function update($id, Request $request){
+        
+        $this->validate($request,[
+            'username' => 'required|min:6',
+            'name' => 'required',
+            'no_hp' => 'required|min:10',
+            'email' => 'required|email',
+            'level' => 'required',
+        ]);
+
+        $user = User::find($id);
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->level = $request->level;
+        $user->unit_id = $request->unit;
+        
+
+        //$user = User::find($id); 
+        $user->pegawai->alamat = $request->alamat;
+        $user->pegawai->no_hp = $request->no_hp;
+        //$user->pegawai()->save($pegawai);
+        $user->push();
+		
+        return redirect('/pegawai');
+	}
 }
