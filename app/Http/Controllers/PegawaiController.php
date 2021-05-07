@@ -11,8 +11,14 @@ use App\Unit;
 class PegawaiController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
+        session()->put('halaman','master');
     	// mengambil semua data pengguna
     	$pegawai = User::all();
     	// return data ke view
@@ -88,7 +94,7 @@ class PegawaiController extends Controller
     public function update($id, Request $request){
         
         $this->validate($request,[
-            'username' => 'required|min:6',
+            //'username' => 'required|min:6',
             'name' => 'required',
             'no_hp' => 'required|min:10',
             'email' => 'required|email',
@@ -96,7 +102,7 @@ class PegawaiController extends Controller
         ]);
 
         $user = User::find($id);
-        $user->username = $request->username;
+        //$user->username = $request->username;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->level = $request->level;

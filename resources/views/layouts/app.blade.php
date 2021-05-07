@@ -28,6 +28,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('adminlte/bower_components/select2/dist/css/select2.min.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -179,6 +181,8 @@ desired effect
 <script src="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <!-- bootstrap time picker -->
 <script src="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 
 <script>
   $(function () {
@@ -201,6 +205,9 @@ desired effect
       pickTime: true,
       
     })
+
+    //Initialize Select2 Elements
+    $('.select2').select2()
   })
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

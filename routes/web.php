@@ -52,3 +52,7 @@ Route::get('/ruangan/hapus/{id}', 'RuanganController@delete');
 Route::get('/agenda', 'AgendaController@index');
 Route::get('/agenda/tambah', 'AgendaController@tambah');
 Route::post('/agenda/tambahagenda', 'AgendaController@tambahagenda');
+Route::get('/agenda/hapus/{id}', 'AgendaController@delete');
+//Undangan
+Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
+Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');

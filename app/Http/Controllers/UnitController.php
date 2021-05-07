@@ -8,7 +8,14 @@ use App\Unit;
 class UnitController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
+        session()->put('halaman','master');
+
         $unit = Unit::all();
 		return view('unit',['unit'=>$unit]);
 	}

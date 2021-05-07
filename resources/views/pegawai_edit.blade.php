@@ -23,7 +23,7 @@
                 <!-- text input -->
                     <div class="form-group">
                         <label>NIP</label>
-                        <input type="text" class="form-control" placeholder="Masukkan NIP" name="username" value="{{$pegawai->username}}">
+                        <input type="text" class="form-control" placeholder="Masukkan NIP" name="username" value="{{$pegawai->username}}" disabled>
                         @if($errors->has('username'))
                             <div class="text-danger">
                                 {{ $errors->first('username')}}

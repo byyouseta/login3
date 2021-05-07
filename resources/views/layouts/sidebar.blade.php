@@ -21,11 +21,26 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN MENU</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/home"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="/agenda"><i class="fa fa-calendar-check-o"></i> <span>Agenda</span></a></li>
+        <!-- Optionally, you can add icons to the links | Mengambil data session-->
         
-        <li class="treeview">
+        @if(session()->get('halaman')=='home')
+          <li class="active">
+        @else
+          <li>
+        @endif
+          <a href="/home"><i class="fa fa-home"></i> <span>Home</span></a></li>
+        @if(session()->get('halaman')=='agenda')
+          <li class="active">
+        @else
+          <li>
+        @endif    
+          <a href="/agenda"><i class="fa fa-calendar-check-o"></i> <span>Agenda</span></a></li>
+        
+        @if(session()->get('halaman')=='master')
+          <li class="treeview active">
+        @else
+          <li class="treeview">
+        @endif
           <a href="#"><i class="fa fa-database"></i> <span>Master Data</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>

@@ -46,6 +46,7 @@
         @if(!empty($pesan))
         <div class="alert alert-success alert-block">
 		        <button type="button" class="close" data-dismiss="alert">×</button>	
+                <a href="/unit" class="btn btn-warning">Kembali</a>
                 <strong>{{ $pesan }}</strong>
 	    </div>
         @endif

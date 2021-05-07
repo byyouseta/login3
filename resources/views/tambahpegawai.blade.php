@@ -96,6 +96,7 @@
 
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="/pegawai" class="btn btn-warning">Kembali</a>
                     </div>
                 </form>
             </div>

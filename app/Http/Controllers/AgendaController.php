@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\FormValidationRequest;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use Validator;
 use App\Agenda;
 use App\Ruangan;
 use App\Pegawai;
+use App\User;
 
 class AgendaController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
+        session()->put('halaman','agenda');
     	// mengambil semua data pengguna
     	$agenda = Agenda::orderBy('tanggal', 'ASC')->get();
     	// return data ke view
@@ -48,7 +57,7 @@ class AgendaController extends Controller
         $waktu_selesai = DateTime::createFromFormat( 'H:i A', $waktu_selesai);
         $waktu_selesai = $waktu_selesai->format( 'H:i:s');
 
-        $pic = Auth::user()->id;
+        $pic = Auth::user()->name;
         $agenda = new Agenda;
         $agenda->nama_agenda = $request->nama_agenda;
         $agenda->ruangan_id = $request->ruangan;
@@ -57,9 +66,38 @@ class AgendaController extends Controller
         $agenda->waktu_selesai = $waktu_selesai;
         $agenda->keterangan = $request->keterangan;
         $agenda->status = 'Scheduled';
-        $agenda->user_id = $pic;
+        $agenda->pic = $pic;
         $agenda->save();
 
         return redirect('/agenda');
+    }
+
+    public function delete($id)
+    {
+        $agenda = Agenda::find($id);
+        $agenda->delete();
+
+        return redirect('/agenda');
+    }
+
+    public function undangan($id)
+    {
+        
+    	// mengambil semua data pengguna
+    	$agenda = Agenda::find($id);
+        // lempar juga data pegawai
+        $pegawai = User::all();
+    	// return data ke view
+    	return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai]);
+    }
+
+    public function tambahpeserta($id, FormvalidationRequest $request){
+
+        $user = $request->peserta;
+        $user = User::find($user);
+        $agenda = Agenda::find($id);
+        $user->agenda()->attach($agenda, ['presensi' => 'belum']);
+        
+        return redirect("/agenda/undangan/$id");
     }
 }

@@ -41,7 +41,7 @@ class User extends Authenticatable
     }
 
     public function agenda() { 
-        return $this->hasMany('App\Agenda'); 
+        return $this->belongsToMany('App\Agenda')->withPivot('presensi')->withTimestamps(); 
     }
 
 }

@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     { 
+        session()->put('halaman','home');
         return view('home');
     }
 

@@ -8,7 +8,14 @@ use App\Ruangan;
 class RuanganController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
+        session()->put('halaman','master');
+
         $ruangan = Ruangan::all();
 		return view('ruangan',['ruangan'=>$ruangan]);
 	}
