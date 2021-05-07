@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\FormValidationRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Validator;
@@ -91,13 +92,33 @@ class AgendaController extends Controller
     	return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai]);
     }
 
-    public function tambahpeserta($id, FormvalidationRequest $request){
-
-        $user = $request->peserta;
-        $user = User::find($user);
-        $agenda = Agenda::find($id);
-        $user->agenda()->attach($agenda, ['presensi' => 'belum']);
+    public function tambahpeserta($id,Request $request){
+        //$this->validate($request,[
+        //    'peserta' => 'required|unique:agenda_user,user_id,agenda_id' . $id,
+        //]);
         
-        return redirect("/agenda/undangan/$id");
+        $cari = Agenda::whereHas('user', function ($query) use($request) {
+            $query->where('user_id', '=', $request->peserta)
+                ->where('agenda_id','=', $request->id);
+        })->count();   
+
+        //$cari = Agenda::find($id)
+        //    ->where('user_id', '=', $request->peserta)
+        //    ->get();
+
+        if(empty($cari)) {
+
+            $user = $request->peserta;
+            $user = User::find($user);
+            $agenda = Agenda::find($id);
+            $user->agenda()->attach($agenda, ['presensi' => 'belum']);
+            
+            return redirect("/agenda/undangan/$id");
+        }
+        else{
+            return redirect("/agenda/undangan/$id")->withErrors(['Pasien sudah pernah ditambahkan', 'The Message']);
+        }
+
+        
     }
 }

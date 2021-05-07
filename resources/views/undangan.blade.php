@@ -37,6 +37,7 @@
                         <label>Tambah Peserta</label>
                     </div>
                 <div class="form-group col-md-8">
+                    <input type="hidden" name="id" value="{{$id}}">
                     <select class="form-control select2 " style="width: 100%;" name="peserta">
                     <option selected value="" active>Pilih</option>
                         @foreach($pegawai as $p)
@@ -50,9 +51,9 @@
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</button>
                 </div>
                 <div class="col-md-12">
-                @if($errors->has('peserta'))
+                @if($errors->any())
                         <div class="text-danger">
-                            {{ $errors->first('peserta')}}
+                            {{ $errors->first()}}
                         </div>
                     @endif
                 </div>
