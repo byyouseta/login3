@@ -73,6 +73,13 @@ class AgendaController extends Controller
         return redirect('/agenda');
     }
 
+    public function edit($id){
+        
+        $agenda = Agenda::find($id);
+        $ruangan = Ruangan::all();
+        return view('agenda_edit', ['ruangan' => $ruangan,'agenda' => $agenda]);
+    }
+
     public function delete($id)
     {
         $agenda = Agenda::find($id);
