@@ -12,7 +12,7 @@
     <div class="col-xs-12">
         <div class="box">
         <div class="box-header">
-            <a href="/agenda" class="btn btn-warning">Kembali</a>
+            <div href="/agenda" class="btn btn-warning">Kembali</div>
             <table class="table table-hover" style="width: 300px;">
                 <tr><th>Nama Rapat</th><td>{{$agenda->nama_agenda}}</td></tr>
                 <tr><th>PIC Rapat</th><td>{{$agenda->pic}}</td></tr>

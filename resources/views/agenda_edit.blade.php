@@ -17,7 +17,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form role="form" action="/agenda/update" method="post">
+                <form role="form" action="/agenda/update/{{$agenda->id}}" method="post">
                 {{ csrf_field() }}
                 <!-- text input -->
                     <div class="form-group">
@@ -35,7 +35,7 @@
                         <select class="form-control" name="ruangan">
                             <option value="">Pilih</option>
                             @foreach($ruangan as $r)
-                                <option value="{{ $r->id}}" @if($r->id==$agenda->ruangan_id) <selected> @endif {{$r->nama}}</option>
+                                <option value="{{ $r->id}}" @if($r->id==$agenda->ruangan_id) selected @endif> {{$r->nama}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('ruangan'))
@@ -61,13 +61,16 @@
                             </div>
                         @endif
                     </div>
-
+                    <?php 
+                        $waktu_mulai = new DateTime($agenda->waktu_mulai);
+                        $waktu_selesai = new DateTime($agenda->waktu_selesai);
+                    ?>
                     <div class="bootstrap-timepicker">
                         <div class="form-group">
                         <label>Waktu Mulai:</label>
 
                         <div class="input-group">
-                            <input type="text" class="form-control timepicker" name="waktu_mulai" value="{{ $agenda->waktu_mulai}}">
+                            <input type="text" class="form-control timepicker" name="waktu_mulai" value="{{ $waktu_mulai->format('h:i A')}}">
 
                             <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
@@ -88,7 +91,7 @@
                         <label>Waktu Selesai:</label>
 
                         <div class="input-group">
-                            <input type="text" class="form-control timepicker" name="waktu_selesai" value="{{ $agenda->waktu_selesai}}">
+                            <input type="text" class="form-control timepicker" name="waktu_selesai" value="{{ $waktu_selesai->format('h:i A')}}">
 
                             <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>

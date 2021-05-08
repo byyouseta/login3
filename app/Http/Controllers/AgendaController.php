@@ -80,6 +80,39 @@ class AgendaController extends Controller
         return view('agenda_edit', ['ruangan' => $ruangan,'agenda' => $agenda]);
     }
 
+    public function update($id, Request $request){
+        
+        $this->validate($request,[
+            'nama_agenda' => 'required|min:6',
+            'ruangan' => 'required',
+            'tanggal' => 'required|min:10',
+            'waktu_mulai' => 'required',
+            'waktu_selesai' => 'required',
+            'keterangan' => 'required',
+        ]);
+
+        //Konversi waktu mulai
+        $waktu_mulai = $request->get('waktu_mulai');
+        $waktu_mulai = DateTime::createFromFormat( 'H:i A', $waktu_mulai);
+        $waktu_mulai = $waktu_mulai->format( 'H:i:s');
+        //Konversi waktu selesai
+        $waktu_selesai = $request->get('waktu_selesai');
+        $waktu_selesai = DateTime::createFromFormat( 'H:i A', $waktu_selesai);
+        $waktu_selesai = $waktu_selesai->format( 'H:i:s');
+
+        $agenda = Agenda::find($id);
+        $agenda->nama_agenda = $request->nama_agenda;
+        $agenda->ruangan_id = $request->ruangan;
+        $agenda->tanggal = $request->tanggal;
+        $agenda->waktu_mulai = $waktu_mulai;
+        $agenda->waktu_selesai = $waktu_selesai;
+        $agenda->keterangan = $request->keterangan;
+        
+        $agenda->save();
+		
+        return redirect('/agenda');
+	}
+
     public function delete($id)
     {
         $agenda = Agenda::find($id);
@@ -123,7 +156,7 @@ class AgendaController extends Controller
             return redirect("/agenda/undangan/$id");
         }
         else{
-            return redirect("/agenda/undangan/$id")->withErrors(['Pasien sudah pernah ditambahkan', 'The Message']);
+            return redirect("/agenda/undangan/$id")->withErrors(['Peserta sudah pernah ditambahkan', 'The Message']);
         }
 
         
