@@ -59,3 +59,5 @@ Route::post('/agenda/update/{id}', 'AgendaController@update');
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');
 Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');
+//Presensi
+Route::get('/presensi/undangan/{id}', 'PresensiController@index');
