@@ -12,21 +12,16 @@
     <div class="col-xs-12">
         <div class="box">
         <div class="box-header">
-            <div href="/agenda" class="btn btn-warning">Kembali</div>
+            <a href="/agenda" class="btn btn-warning">Kembali</a>
+        </div>
+        <div class="box-header">
             <table class="table table-hover" style="width: 300px;">
                 <tr><th>Nama Rapat</th><td>{{$agenda->nama_agenda}}</td></tr>
                 <tr><th>PIC Rapat</th><td>{{$agenda->pic}}</td></tr>
                 <tr><th>Waktu</th><td>{{$agenda->waktu_mulai .' - '. $agenda->waktu_selesai}}</td></tr>
                 <tr><th>Tempat</th><td>{{$agenda->ruangan->nama}}</td></tr>
             </table>
-            <div class="box-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
+            
         </div>
     </div> 
     <div class="box box-success">
@@ -62,9 +57,20 @@
         </div>
     </div>
         <div class="box box-primary">
+            <div class="box-header">
         <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
                 <h4> <label>Daftar Peserta </label></h4>
+                    <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                    <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+            <div class="box-body table-responsive no-padding">
                 <?php $no=1; ?>
                 <table class="table table-hover">
                 <tr>
@@ -72,7 +78,7 @@
                     <th>Nama</th>
                     <th>Unit</th>
                     <th>Status Presensi</th>
-                    <th>Reason</th>
+                    <th>Action</th>
                 </tr>
                 
                     @foreach($agenda->user as $user)
@@ -87,11 +93,14 @@
                             <span class="label label-danger">
                         @endif
                             {{$user->pivot->presensi}}</span></td>
-                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                        <td><div class="btn-group">
+                            <a href="/undangan/{{$id}}/hapus/{{ $user->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                        </div></td>
                         </tr>
                     @endforeach
                 </table>
             </div>
+            
         <!-- /.box-body -->
         </div>
         

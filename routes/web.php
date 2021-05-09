@@ -58,3 +58,4 @@ Route::post('/agenda/update/{id}', 'AgendaController@update');
 //Undangan
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');
+Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');

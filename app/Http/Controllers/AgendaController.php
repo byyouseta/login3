@@ -157,8 +157,13 @@ class AgendaController extends Controller
         }
         else{
             return redirect("/agenda/undangan/$id")->withErrors(['Peserta sudah pernah ditambahkan', 'The Message']);
-        }
+        } 
+    }
 
+    public function deleteundangan($id, $ids)
+    {
+        $agenda = Agenda::find($id)->user()->detach($ids);
         
+        return redirect("/agenda/undangan/$id");
     }
 }
