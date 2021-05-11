@@ -13,6 +13,7 @@
         <div class="box">
         <div class="box-header">
             <a href="/agenda" class="btn btn-warning">Kembali</a>
+            <a href="/agenda/resume" class="btn btn-primary"><i class="fa fa-mail-forward"></i> Buat Notulen</a>
         </div>
         <div class="box-header">
             <table class="table table-hover" style="width: 300px;">

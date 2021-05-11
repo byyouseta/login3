@@ -20,6 +20,7 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{asset('/adminlte/plugins/iCheck/square/blue.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/css/custom.css')}}">
+    <script type="text/javascript" src="{{asset('/js/jquery.js')}}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -68,8 +69,9 @@
 
             <div class="form-group has-feedback">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <span class="input-group-addon" id="mybutton" onclick="change()"><i class="fa fa-eye"></i></span>
                     <input type="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Password">
+                    
                 </div>
               
                 @if ($errors->has('password'))
@@ -84,7 +86,10 @@
             <div class="row">
                 <!-- /.col -->
                 <div class="col-xs-12">
+                    
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
+                    <h5 class="text-center"><strong>atau</strong></h5>
+                    <a href="/tamu" class="btn btn-warning btn-block btn-flat">Presensi sebagai Tamu</a>
                 </div>
                 <!-- /.col -->
             </div>
@@ -92,6 +97,10 @@
 
     </div>
     <!-- /.login-box-body -->
+    <div class="login-box-footer">
+        <h5 class="text-center"><strong>E-Agenda 1.0 <br> Copyright &copy; 2021 IT <a href="https://rsupsurakarta.co.id/">RSUP Surakarta</a><br></strong> 
+        All rights reserved.
+    </div>
     </div>
     <!-- /.login-box -->
     
@@ -110,7 +119,26 @@
         increaseArea: '20%' /* optional */
         });
     });
-    </script></div>
+    </script>
+    <script type="text/javascript">
+        function change()
+        {
+        var x = document.getElementById('password').type;
+
+        if (x == 'password')
+        {
+            document.getElementById('password').type = 'text';
+            document.getElementById('mybutton').innerHTML = '<i class="fa fa-eye-slash"></i>';
+        }
+        else
+        {
+            document.getElementById('password').type = 'password';
+            document.getElementById('mybutton').innerHTML = '<i class="fa fa-eye"></i>';
+        }
+        }
+    </script>
+    </div>
     </body>
+    
     </html>
 @endif
