@@ -51,7 +51,7 @@
                                 document.getElementById(id).innerHTML += hours + ' Jam ';
                                 document.getElementById(id).innerHTML += minutes + ' Menit ';
                                 document.getElementById(id).innerHTML += seconds + ' detik';
-                                document.getElementById(id).innerHTML +='<h2>AGENDA BELUM BERAKHIR</h2>';
+                                document.getElementById(id).innerHTML +='<h2>AGENDA BELUM DIMULAI</h2>';
                             }
                             timer = setInterval(showRemaining, 1000);
                         }
@@ -74,25 +74,53 @@
                             
                         
                     </script>
-                    <!-- <tr><th>Waktu tersisa</th><td id="countdown"></td></tr> -->
+                    <?php
+                        $now = new DateTime();
+                        $now = $now->format('Y-m-d'); 
+                    ?>
+                    @if($now < $agenda->tanggal)
+                    <tr><th>Waktu menuju Agenda</th><td id="countdown"></td></tr>
+                    @else
                     <tr><th>Waktu Sekarang</th><td> <h2> <span id='ct5'></span></h2> </span></td></tr>
+                    @endif
                 </table>
             </div>
-        
-            
-        
-           
             <div class="box-footer">
-                <form role="form" action="/presensi/peserta" method="post">
+                <form role="form" action="/presensi/peserta/{{$agenda->id}}" method="post">
                 {{ csrf_field() }}
                 <table class="table table-condensed" >
-                    <tr><th style="width: 150px">Nama Peserta </th><td>{{$pegawai->name}}</td></tr>
-                    <tr><th>Unit </th><td>{{$pegawai->unit->nama_unit}}</td></tr>
-                
+                    <tr>
+                        <th style="width: 150px">Nama Peserta </th><td>{{$pegawai->name}}</td>
+                        <input type=hidden name='user_id' value='{{$pegawai->id}}'>
+                    </tr>
+                    <tr>
+                        <th>Unit </th><td>{{$pegawai->unit->nama_unit}}</td>
+                        <!--<input type=hidden name='agenda_id' value='{{$agenda->id}}'>-->
+                    </tr>
+                    @foreach($agenda->user as $user)
+                        @if($user->pivot->user_id == $pegawai->id)
+                    
+                    <tr>
+                        <th>Status Presensi </th><td>{{$user->pivot->presensi}} {{$user->pivot->presensi_at}}</td>
+                        <!--<input type=hidden name='agenda_id' value='{{$agenda->id}}'>-->
+                    </tr>
+                        @endif
+                    @endforeach
                     <tr><th colspan =2>
-                        <button type="submit" class="btn btn-success btn-block">Klik untuk Presensi</button>
+                    @foreach($agenda->user as $user)
+                        @if($user->pivot->user_id == $pegawai->id)
+                            @if(($now == $agenda->tanggal) AND ($user->pivot->presensi=='belum'))
+                            <button type="submit" class="btn btn-success btn-block">Klik untuk Presensi</button>
+                            
+                            @else
+                            <button type="submit" class="btn btn-success btn-block" disabled>Klik untuk Presensi</button>
+                            
+                            @endif
+                        @endif
+                    @endforeach
                         <a href="/agenda" class="btn btn-warning btn-block">Kembali</a>
                     </th></tr>
+                    
                 </form>
                 </table>
                 @if($errors->any())

@@ -39,11 +39,16 @@
 				<th>Waktu Selesai</th>
 				<th>Tempat</th>
 				<th>Status</th>
+				<th>Jumlah Peserta</th>
 				<th>PIC</th>
 				<th>Action</th>
 			</tr></thead>
 			<tbody>
-				<?php $no=1; ?>
+				<?php 
+					$no=1; 
+					$now = new DateTime();
+					$now = $now->format('Y-m-d'); 
+				?>
 				@foreach($agenda as $a)
 				<tr>
 					<td>{{ $no++ }}</td>
@@ -51,7 +56,7 @@
 					<td>{{ $a->tanggal }}</td>
 					<td>{{ $a->waktu_mulai }}</td>
 					<td>{{ $a->waktu_selesai }}</td>
-					<td>{{ $a->ruangan->nama }}</td>
+					<td>{{ $a->nama_ruangan }}</td>
 					<td>
 						@if($a->status=="Scheduled")
 							<span class="label label-success">{{$a->status}}</span>
@@ -61,14 +66,20 @@
 						
 						@endif
 					</td>
+					<td>{{ $a->peserta }}</td>
 					<td>{{ $a->pic }}</td>
 					<td>
 					<div class="btn-group">
 						<a href="/agenda/undangan/{{ $a->id }}" class="btn btn-success btn-sm"><i class="fa fa-info-circle"></i></a>
 						<a href="/presensi/undangan/{{ $a->id }}" class="btn btn-primary btn-sm"><i class="fa fa-sign-in"></i></a>
 						@if((Auth::user()->name==$a->pic) OR (Auth::user()->level=='admin'))
-						<a href="/agenda/edit/{{ $a->id }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-						<a href="/agenda/hapus/{{ $a->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+							@if($now < $a->tanggal)
+							<a href="/agenda/edit/{{ $a->id }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+							<a href="/agenda/hapus/{{ $a->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+							@else
+							<a href="/agenda/edit/{{ $a->id }}" class="btn btn-warning btn-sm" disabled><i class="fa fa-edit"></i></a>
+							<a href="/agenda/hapus/{{ $a->id }}" class="btn btn-danger btn-sm" disabled><i class="fa fa-trash-o"></i></a>
+							@endif
 						@endif
 					</div>
 					</td>

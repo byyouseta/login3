@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FormValidationRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use DB;
 use DateTime;
-use Validator;
 use App\Agenda;
+use App\User;
 use App\Ruangan;
 use App\Pegawai;
-use App\User;
 
 class AgendaController extends Controller
 {
@@ -25,9 +25,19 @@ class AgendaController extends Controller
     {
         session()->put('halaman','agenda');
     	// mengambil semua data pengguna
-    	$agenda = Agenda::orderBy('tanggal', 'ASC')->get();
+    	       
+        $query = DB::table('agenda')
+            ->join('agenda_user', 'agenda.id', '=', 'agenda_user.agenda_id')
+            ->join('ruangan', 'agenda.ruangan_id', '=', 'ruangan.id')
+            ->select('agenda.*', 'ruangan.nama as nama_ruangan', DB::raw('COUNT(agenda_user.user_id) as peserta'))
+            ->groupBy('agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
+                'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
+                'agenda.pic', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
+            ->orderBy('tanggal', 'asc')
+            ->where('agenda.status', '=','Scheduled')
+            ->get();
     	// return data ke view
-    	return view('agenda', ['agenda' => $agenda]);
+    	return view('agenda', ['agenda' => $query]);
     }
 
     public function tambah()

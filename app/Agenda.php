@@ -15,7 +15,7 @@ class Agenda extends Model
 
     public function user()
     {
-    	return $this->belongsToMany('App\User')->withPivot('presensi')->withTimestamps();
+    	return $this->belongsToMany('App\User')->withPivot('presensi','presensi_at')->withTimestamps();
     }
 
     public function ruangan()

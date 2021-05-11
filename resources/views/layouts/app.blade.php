@@ -183,7 +183,7 @@ desired effect
 <script src="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
 
 <script>
   $(function () {

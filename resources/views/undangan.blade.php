@@ -17,9 +17,11 @@
         <div class="box-header">
             <table class="table table-hover" style="width: 300px;">
                 <tr><th>Nama Rapat</th><td>{{$agenda->nama_agenda}}</td></tr>
-                <tr><th>PIC Rapat</th><td>{{$agenda->pic}}</td></tr>
+                <tr><th>Tanggal</th><td>{{$agenda->tanggal}}</td></tr>
                 <tr><th>Waktu</th><td>{{$agenda->waktu_mulai .' - '. $agenda->waktu_selesai}}</td></tr>
                 <tr><th>Tempat</th><td>{{$agenda->ruangan->nama}}</td></tr>
+                <tr><th>PIC Rapat</th><td>{{$agenda->pic}}</td></tr>
+                <tr><th>Keterangan</th><td>{{$agenda->keterangan}}</td></tr>
             </table>
             
         </div>
@@ -69,6 +71,10 @@
                     </div>
                 </div>
             </div>
+            <?php
+                $now = new DateTime();
+                $now = $now->format('Y-m-d'); 
+            ?>
             <div class="box-body">
             <div class="box-body table-responsive no-padding">
                 <?php $no=1; ?>
@@ -78,6 +84,7 @@
                     <th>Nama</th>
                     <th>Unit</th>
                     <th>Status Presensi</th>
+                    <th>Waktu Presensi</th>
                     <th>Action</th>
                 </tr>
                 
@@ -93,9 +100,14 @@
                             <span class="label label-danger">
                         @endif
                             {{$user->pivot->presensi}}</span></td>
-                        <td><div class="btn-group">
-                            <a href="/undangan/{{$id}}/hapus/{{ $user->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
-                        </div></td>
+                        <td>{{$user->pivot->presensi_at}}</td>
+                        <td>
+                        @if($now < $agenda->tanggal)
+                            <div class="btn-group">
+                                <a href="/undangan/{{$id}}/hapus/{{ $user->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        @endif
+                        </td>
                         </tr>
                     @endforeach
                 </table>
