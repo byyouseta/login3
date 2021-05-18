@@ -50,7 +50,7 @@
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</button>
                 </div>
                 <div class="col-md-12">
-                @if($errors->any())
+                    @if($errors->any())
                         <div class="text-danger">
                             {{ $errors->first()}}
                         </div>

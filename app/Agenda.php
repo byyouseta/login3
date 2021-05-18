@@ -22,4 +22,9 @@ class Agenda extends Model
     {
     	return $this->belongsTo('App\Ruangan');
     }
+
+    public function tamu()
+    {
+    	return $this->hasMany('App\Tamu');
+    }
 }

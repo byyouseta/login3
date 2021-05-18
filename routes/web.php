@@ -62,3 +62,9 @@ Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');
 //Presensi
 Route::get('/presensi/undangan/{id}', 'PresensiController@index');
 Route::post('/presensi/peserta/{id}', 'PresensiController@presensi');
+//tamu
+Route::get('/tamu', 'TamuController@index');
+Route::post('/presensitamu', 'TamuController@presensi');
+//test
+Route::get('/captcha-form', 'CaptchaController@captchaForm');
+Route::post('/store-captcha-form', 'CaptchaController@storeCaptchaForm');
