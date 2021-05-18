@@ -55,16 +55,18 @@ Route::post('/agenda/tambahagenda', 'AgendaController@tambahagenda');
 Route::get('/agenda/hapus/{id}', 'AgendaController@delete');
 Route::get('/agenda/edit/{id}', 'AgendaController@edit');
 Route::post('/agenda/update/{id}', 'AgendaController@update');
+//Notulen
+Route::post('/notulen/upload/{id}', 'AgendaController@upload');
+Route::get('/notulen/view/{id}', 'AgendaController@view');
 //Undangan
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');
 Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');
 //Presensi
 Route::get('/presensi/undangan/{id}', 'PresensiController@index');
-Route::post('/presensi/peserta/{id}', 'PresensiController@presensi');
+Route::post('/presensi/peserta/{file}', 'PresensiController@presensi');
+
+
 //tamu
 Route::get('/tamu', 'TamuController@index');
 Route::post('/presensitamu', 'TamuController@presensi');
-//test
-Route::get('/captcha-form', 'CaptchaController@captchaForm');
-Route::post('/store-captcha-form', 'CaptchaController@storeCaptchaForm');

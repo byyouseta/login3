@@ -16,72 +16,47 @@
             
         </div>
         <div class="box-header">
-            <table class="table table-hover" style="width: 400px;">
+            <table class="table table-hover" style="width: 300px;">
                 <tr><th>Nama Rapat</th><td>{{$agenda->nama_agenda}}</td></tr>
                 <tr><th>Tanggal</th><td>{{$agenda->tanggal}}</td></tr>
                 <tr><th>Waktu</th><td>{{$agenda->waktu_mulai .' - '. $agenda->waktu_selesai}}</td></tr>
                 <tr><th>Tempat</th><td>{{$agenda->ruangan->nama}}</td></tr>
                 <tr><th>PIC Rapat</th><td>{{$agenda->pic}}</td></tr>
                 <tr><th>Keterangan</th><td>{{$agenda->keterangan}}</td></tr>
-                <tr><th>Notulen</th><td>{{$agenda->notulen}} 
-                    <a href="/notulen/view/{{ $agenda->notulen }}" class="label label-success">Lihat File</a>
-                </td></tr>
             </table>
             
         </div>
     </div> 
-    <?php 
-        $no=1; 
-        $now = new DateTime();
-        $now = $now->format('Y-m-d'); 
-    ?>
     <div class="box box-success">
         <div class="box-body">
-            @if($now <= $agenda->tanggal)
-                <form role="form" action="/undangan/tambahpeserta/{{ $id }}" method="post">
-                    {{ csrf_field() }}
-                    <div class="box-header table-hover">
-                        <div class="form-group col-md-12">
-                            <label>Tambah Peserta</label>
-                        </div>
-                    <div class="form-group col-md-8">
-                        <input type="hidden" name="id" value="{{$id}}">
-                        <select class="form-control select2 " style="width: 100%;" name="peserta">
-                        <option selected value="" active>Pilih</option>
-                            @foreach($pegawai as $p)
-                                <option value="{{ $p->id}}">{{ $p->name ." Unit ". $p->unit->nama_unit}}</option>
-                            @endforeach
-                        </select>
-                        
+            <form role="form" action="/undangan/tambahpeserta/{{ $id }}" method="post">
+                {{ csrf_field() }}
+                <div class="box-header table-hover">
+                    <div class="form-group col-md-12">
+                        <label>Tambah Peserta</label>
                     </div>
+                <div class="form-group col-md-8">
+                    <input type="hidden" name="id" value="{{$id}}">
+                    <select class="form-control select2 " style="width: 100%;" name="peserta">
+                    <option selected value="" active>Pilih</option>
+                        @foreach($pegawai as $p)
+                            <option value="{{ $p->id}}">{{ $p->name ." Unit ". $p->unit->nama_unit}}</option>
+                        @endforeach
+                    </select>
                     
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</button>
-                    </div>
-                    <div class="col-md-12">
-                        @if($errors->any())
-                            <div class="text-danger">
-                                {{ $errors->first()}}
-                            </div>
-                        @endif
-                    </div>
-                </form>
-            @endif
-            @if(($now >= $agenda->tanggal) AND (empty($agenda->notulen)))
-                <form action="/notulen/upload/{{ $id }}" method="POST" enctype="multipart/form-data">
-					{{ csrf_field() }}
- 
-					<div class="form-group col-md-8">
-						<strong>File Notulen dalam bentuk PDF</strong>
-						<input type="file" name="file">
-                        
-					</div>
- 
-					<div class="form-group col-md-2">
-					    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-upload"> Upload</i></button>
-                    </div>
-				</form>
-            @endif
+                </div>
+                
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</button>
+                </div>
+                <div class="col-md-12">
+                    @if($errors->any())
+                        <div class="text-danger">
+                            {{ $errors->first()}}
+                        </div>
+                    @endif
+                </div>
+            </form>
         </div>
     </div>
         <div class="box box-primary">
@@ -97,7 +72,10 @@
                     </div>
                 </div>
             </div>
-            
+            <?php
+                $now = new DateTime();
+                $now = $now->format('Y-m-d'); 
+            ?>
             <div class="box-body">
             <div class="box-body table-responsive no-padding">
                 <?php $no=1; ?>

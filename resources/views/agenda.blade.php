@@ -73,7 +73,7 @@
 						<a href="/agenda/undangan/{{ $a->id }}" class="btn btn-success btn-sm"><i class="fa fa-info-circle"></i></a>
 						<a href="/presensi/undangan/{{ $a->id }}" class="btn btn-primary btn-sm"><i class="fa fa-sign-in"></i></a>
 						@if((Auth::user()->name==$a->pic) OR (Auth::user()->level=='admin'))
-							@if($now < $a->tanggal)
+							@if($now < $a->tanggal) 
 							<a href="/agenda/edit/{{ $a->id }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
 							<a href="/agenda/hapus/{{ $a->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
 							@else

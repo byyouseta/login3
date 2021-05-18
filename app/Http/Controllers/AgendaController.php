@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FormValidationRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use DB;
 use DateTime;
 use App\Agenda;
@@ -32,9 +33,9 @@ class AgendaController extends Controller
             ->select('agenda.*', 'ruangan.nama as nama_ruangan', DB::raw('COUNT(agenda_user.user_id) as peserta'))
             ->groupBy('agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
                 'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
-                'agenda.pic', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
+                'agenda.pic', 'agenda.notulen', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
             ->orderBy('tanggal', 'asc')
-            ->where('agenda.status', '=','Scheduled')
+            //->where('agenda.status', '=','Scheduled')
             ->get();
     	// return data ke view
     	return view('agenda', ['agenda' => $query]);
@@ -175,5 +176,39 @@ class AgendaController extends Controller
         $agenda = Agenda::find($id)->user()->detach($ids);
         
         return redirect("/agenda/undangan/$id");
+    }
+
+    public function upload($id, Request $request){
+        $this->validate($request, [
+			'file' => 'required|mimes:pdf|max:2048',
+			
+		]);
+        
+        // menyimpan data file yang diupload ke variabel $file
+		$file = $request->file('file');
+        $random = Str::random(12);
+        $nama_file = time()."_".$random.'.pdf';
+ 
+		//$nama_file = time()."_".$file->getClientOriginalName();
+ 
+      	// isi dengan nama folder tempat kemana file diupload
+		$tujuan_upload = 'notulen_rapat';
+		$file->move($tujuan_upload,$nama_file);
+
+        $agenda = Agenda::find($id);
+        $agenda->notulen = $nama_file;
+        $agenda->status = 'Done';
+        $agenda->save();
+
+        return redirect("/agenda/undangan/$id");
+    }
+
+    public function view($file) {
+        // Force download of the file
+        $this->file_to_download   = 'notulen_rapat/' . $file;
+        //return response()->streamDownload(function () {
+        //    echo file_get_contents($this->file_to_download);
+        //}, $file.'.pdf');
+        return response()->file($this->file_to_download);
     }
 }
