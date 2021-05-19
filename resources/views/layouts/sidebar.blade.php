@@ -36,23 +36,24 @@
         @endif    
           <a href="/agenda"><i class="fa fa-calendar-check-o"></i> <span>Agenda</span></a></li>
         
-        @if(session()->get('halaman')=='master')
-          <li class="treeview active">
-        @else
-          <li class="treeview">
+        @if (Auth::user()->level=='admin')
+          @if(session()->get('halaman')=='master')
+            <li class="treeview active">
+          @else
+            <li class="treeview">
+          @endif
+            <a href="#"><i class="fa fa-database"></i> <span>Master Data</span>
+              <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/unit"><i class="fa fa-puzzle-piece"></i> <span>Unit</span></a></li>
+              <li><a href="/pegawai"><i class="fa fa-users"></i> <span>Pegawai</span></a></li>
+              <li><a href="/ruangan"><i class="fa fa-hotel"></i> <span>Ruangan</span></a></li>
+            </ul>
+            </li>
         @endif
-          <a href="#"><i class="fa fa-database"></i> <span>Master Data</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/unit"><i class="fa fa-puzzle-piece"></i> <span>Unit</span></a></li>
-            <li><a href="/pegawai"><i class="fa fa-users"></i> <span>Pegawai</span></a></li>
-            <li><a href="/ruangan"><i class="fa fa-hotel"></i> <span>Ruangan</span></a></li>
-          </ul>
-        </li>
-        
       </ul>
       <!-- /.sidebar-menu -->
     </section>

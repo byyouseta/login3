@@ -109,6 +109,22 @@
       </li>
           -->
       <!-- User Account Menu -->
+      <script>
+        function display_ct5() {
+            var x = new Date()
+            var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
+
+            var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+            x1 = x1 + " " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds() + ampm;
+            document.getElementById('ct5').innerHTML = x1;
+            display_c5();
+        }
+        function display_c5(){
+            var refresh=1000; // Refresh rate in milli seconds
+            mytime=setTimeout('display_ct5()',refresh)
+        }
+        display_c5()
+      </script>
       <li class="dropdown user user-menu">
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -117,7 +133,7 @@
           <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
             Akhir foto profil-->
           <!-- hidden-xs hides the username on small devices so only the image appears. -->
-          <span class="hidden-xs">{{Auth::user()->name}}</span>
+          <h4><span id='ct5'></span></h4><span class="hidden-xs">{{Auth::user()->name}}</span>
         </a>
         <ul class="dropdown-menu">
           <!-- The user image in the menu -->
@@ -126,7 +142,7 @@
 
             <p>
               {{Auth::user()->name}}
-              <small><?php echo date("l jS \of F Y h:i:s A") . "<br>"; ?></small>
+              
             </p>
           </li>
           <!-- Menu Body -->

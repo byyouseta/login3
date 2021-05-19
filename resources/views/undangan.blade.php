@@ -16,16 +16,34 @@
             
         </div>
         <div class="box-header">
-            <table class="table table-hover" style="width: 400px;">
-                <tr><th>Nama Rapat</th><td>{{$agenda->nama_agenda}}</td></tr>
-                <tr><th>Tanggal</th><td>{{$agenda->tanggal}}</td></tr>
-                <tr><th>Waktu</th><td>{{$agenda->waktu_mulai .' - '. $agenda->waktu_selesai}}</td></tr>
-                <tr><th>Tempat</th><td>{{$agenda->ruangan->nama}}</td></tr>
-                <tr><th>PIC Rapat</th><td>{{$agenda->pic}}</td></tr>
+            <table class="table table-hover" >
+                <tr>
+                    <th>Nama Rapat</th><td>{{$agenda->nama_agenda}}</td>
+                    <th>PIC Rapat</th><td>{{$agenda->pic}}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal</th><td>{{$agenda->tanggal}}</td>
+                    <th>Jumlah Peserta</th><td>{{$agenda->user->count()}}</td>
+                </tr>
+                <tr>
+                    <th>Waktu</th><td>{{$agenda->waktu_mulai .' - '. $agenda->waktu_selesai}}</td>
+                    <th>Peserta Presensi</th><td>{{$presensi}}</td>
+                </tr>
+                <tr>
+                    <th>Tempat</th><td>{{$agenda->ruangan->nama}}</td>
+                    <th>Notulen</th><td>
+                    @if (!empty($agenda->notulen))
+                    {{$agenda->notulen}} 
+                    <a href="/notulen/view/{{ $agenda->notulen }} " target="_blank" class="label label-success">Lihat File</a>
+                    @else
+                    <span class="label label-warning">belum ada Notulen</span>
+                    @endif
+                    </td>
+                </tr>
+                
                 <tr><th>Keterangan</th><td>{{$agenda->keterangan}}</td></tr>
-                <tr><th>Notulen</th><td>{{$agenda->notulen}} 
-                    <a href="/notulen/view/{{ $agenda->notulen }}" class="label label-success">Lihat File</a>
-                </td></tr>
+                
+                
             </table>
             
         </div>
@@ -37,7 +55,7 @@
     ?>
     <div class="box box-success">
         <div class="box-body">
-            @if($now <= $agenda->tanggal)
+            @if(($now <= $agenda->tanggal)AND (Auth::user()->level=='admin'))
                 <form role="form" action="/undangan/tambahpeserta/{{ $id }}" method="post">
                     {{ csrf_field() }}
                     <div class="box-header table-hover">
@@ -127,7 +145,11 @@
                         <td>
                         @if($now < $agenda->tanggal)
                             <div class="btn-group">
-                                <a href="/undangan/{{$id}}/hapus/{{ $user->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                <a href="/undangan/{{$id}}/hapus/{{ Crypt::encrypt($user->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        @else
+                            <div class="btn-group">
+                                <a href="/undangan/{{$id}}/hapus/{{ Crypt::encrypt($user->id) }}" class="btn btn-danger btn-sm" disabled><i class="fa fa-trash-o"></i></a>
                             </div>
                         @endif
                         </td>

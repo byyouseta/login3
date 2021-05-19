@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use \Crypt;
 use DateTime;
 use App\Agenda;
 use App\Pegawai;
@@ -19,7 +20,7 @@ class PresensiController extends Controller
 
     public function index($id)
     {
-        //session()->put('halaman','agenda');
+        $id = Crypt::decrypt($id);
     	// mengambil semua data pengguna
     	$agenda = Agenda::find($id);
         $pegawai = Auth::user();

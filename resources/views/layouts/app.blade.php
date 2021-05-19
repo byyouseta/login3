@@ -77,7 +77,24 @@ desired effect
       <b>e-Agenda</b>
       <small>RSUP Surakarta</small></span>
     </a>
+    <script>
+      function display_ct5() {
+          arrhari = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
+          var x = new Date();
+          hari = x.getDay();
+          var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
 
+          var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+          x1 = arrhari[hari]+ ", " + x1 + " " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds() + ampm;
+          document.getElementById('ct5').innerHTML = x1;
+          display_c5();
+      }
+      function display_c5(){
+          var refresh=1000; // Refresh rate in milli seconds
+          mytime=setTimeout('display_ct5()',refresh)
+      }
+      display_c5()
+    </script>
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
@@ -88,7 +105,7 @@ desired effect
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-            
+          
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
@@ -107,14 +124,14 @@ desired effect
 
                 <p>
                   {{Auth::user()->name}}
-                  <small><?php echo date("l jS \of F Y h:i:s A") . "<br>"; ?></small>
+                  <small><span id='ct5'></span></small>
                 </p>
               </li>
               
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="/password" class="btn btn-default btn-flat">Change Password</a>
+                  <a href="/password" class="btn btn-default btn-block">Change Password</a>
                 </div>
                 <div class="pull-right">
                     <form action="{{ route('logout') }}" method="POST">

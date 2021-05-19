@@ -81,7 +81,7 @@
                     @if($now < $agenda->tanggal)
                     <tr><th>Waktu menuju Agenda</th><td id="countdown"></td></tr>
                     @else
-                    <tr><th>Waktu Sekarang</th><td> <h2> <span id='ct5'></span></h2> </span></td></tr>
+                    <tr><th>Waktu Sekarang</th><td> <h2> <span id='ct5'></span></h2> </td></tr>
                     @endif
                 </table>
             </div>

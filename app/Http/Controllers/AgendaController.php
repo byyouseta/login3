@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\FormValidationRequest;
+use \Crypt;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -31,14 +31,34 @@ class AgendaController extends Controller
             ->join('agenda_user', 'agenda.id', '=', 'agenda_user.agenda_id')
             ->join('ruangan', 'agenda.ruangan_id', '=', 'ruangan.id')
             ->select('agenda.*', 'ruangan.nama as nama_ruangan', DB::raw('COUNT(agenda_user.user_id) as peserta'))
-            ->groupBy('agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
+            //->select('agenda.*', 'ruangan.nama as nama_ruangan', 'agenda_user.user_id')
+            ->groupBy( 'agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
                 'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
                 'agenda.pic', 'agenda.notulen', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
+            ->orderBy('agenda.status', 'desc')
             ->orderBy('tanggal', 'asc')
-            //->where('agenda.status', '=','Scheduled')
+            
             ->get();
+        $query2 = DB::table('agenda')
+            //->join('agenda_user', 'agenda.id', '=', 'agenda_user.agenda_id')
+            ->join('ruangan', 'agenda.ruangan_id', '=', 'ruangan.id')
+            ->select('agenda.*', 'ruangan.nama as nama_ruangan')
+            //->where('agenda.id', '=', 'agenda_user.agenda_id')
+            //->select('agenda.*', 'ruangan.nama as nama_ruangan', 'agenda_user.user_id')
+            //->groupBy( 'agenda_user.user_id','agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
+             //   'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
+            //    'agenda.pic', 'agenda.notulen', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
+            ->orderBy('agenda.status', 'desc')
+            ->orderBy('tanggal', 'asc')
+            ->paginate(2);
+
+        $agenda = Agenda::
+            paginate(10);
+            //->sortBy('tanggal')
+            //->sortByDesc('status')
+            
     	// return data ke view
-    	return view('agenda', ['agenda' => $query]);
+    	return view('agenda', ['agenda' => $query2]);
     }
 
     public function tambah()
@@ -85,7 +105,8 @@ class AgendaController extends Controller
     }
 
     public function edit($id){
-        
+
+        $id = Crypt::decrypt($id);
         $agenda = Agenda::find($id);
         $ruangan = Ruangan::all();
         return view('agenda_edit', ['ruangan' => $ruangan,'agenda' => $agenda]);
@@ -126,6 +147,7 @@ class AgendaController extends Controller
 
     public function delete($id)
     {
+        $id = Crypt::decrypt($id);
         $agenda = Agenda::find($id);
         $agenda->delete();
 
@@ -134,13 +156,17 @@ class AgendaController extends Controller
 
     public function undangan($id)
     {
-        
+        $id = Crypt::decrypt($id); 
     	// mengambil semua data pengguna
     	$agenda = Agenda::find($id);
         // lempar juga data pegawai
         $pegawai = User::all();
+        $peserta = DB::table('agenda_user')
+            ->where('presensi', 'sudah')
+            ->where('agenda_id', $id)
+            ->count();
     	// return data ke view
-    	return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai]);
+    	return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai, 'presensi' => $peserta]);
     }
 
     public function tambahpeserta($id,Request $request){
@@ -157,6 +183,7 @@ class AgendaController extends Controller
         //    ->where('user_id', '=', $request->peserta)
         //    ->get();
 
+        
         if(empty($cari)) {
 
             $user = $request->peserta;
@@ -164,17 +191,21 @@ class AgendaController extends Controller
             $agenda = Agenda::find($id);
             $user->agenda()->attach($agenda, ['presensi' => 'belum']);
             
+            $id = Crypt::encrypt($id);
             return redirect("/agenda/undangan/$id");
         }
         else{
+            $id = Crypt::encrypt($id);
             return redirect("/agenda/undangan/$id")->withErrors(['Peserta sudah pernah ditambahkan', 'The Message']);
         } 
     }
 
     public function deleteundangan($id, $ids)
     {
+        $ids = Crypt::decrypt($ids);
         $agenda = Agenda::find($id)->user()->detach($ids);
-        
+
+        $id = Crypt::encrypt($id);
         return redirect("/agenda/undangan/$id");
     }
 
