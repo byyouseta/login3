@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Crypt;
 use App\User;
 use App\Pegawai;
 use App\Unit;
@@ -78,6 +79,7 @@ class PegawaiController extends Controller
 
     public function delete($id)
     {
+        $id = Crypt::decrypt($id);
         $pegawai = User::find($id);
         $pegawai->delete();
 
@@ -86,6 +88,7 @@ class PegawaiController extends Controller
 
     public function edit($id)
     {
+        $id = Crypt::decrypt($id);
         $pegawai = User::find($id);
         $unit = Unit::all();
         return view('pegawai_edit', ['pegawai' => $pegawai, 'unit' => $unit]);

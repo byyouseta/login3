@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Crypt;
 use App\Unit;
 
 class UnitController extends Controller
@@ -41,6 +42,7 @@ class UnitController extends Controller
 
     public function edit($id)
     {
+        $id = Crypt::decrypt($id);
         $unit = Unit::find($id);
         return view('unit_edit', ['unit' => $unit]);
     }
@@ -61,10 +63,11 @@ class UnitController extends Controller
 
     public function delete($id)
     {
-            $unit = Unit::find($id);
-            $unit->delete();
-    
-            return redirect('/unit');
+        $id = Crypt::decrypt($id);
+        $unit = Unit::find($id);
+        $unit->delete();
+
+        return redirect('/unit');
     }
 
 }

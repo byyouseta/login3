@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ruangan;
+use Crypt;
 
 class RuanganController extends Controller
 {
@@ -43,6 +44,7 @@ class RuanganController extends Controller
 
     public function edit($id)
     {
+        $id = Crypt::decrypt($id);
         $ruangan = Ruangan::find($id);
         return view('ruangan_edit', ['ruangan' => $ruangan]);
     }
@@ -65,6 +67,7 @@ class RuanganController extends Controller
 
     public function delete($id)
     {
+        $id = Crypt::decrypt($id);
         $ruangan = Ruangan::find($id);
         $ruangan->delete();
 

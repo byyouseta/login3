@@ -46,8 +46,10 @@
 					<td>{{ $r->keterangan }}</td>
 					<td>
 						<div class="btn-group">
-							<a href="/ruangan/edit/{{ $r->id }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-							<a href="/ruangan/hapus/{{ $r->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+							<a href="/ruangan/edit/{{ Crypt::encrypt($r->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+							<i class="fa fa-edit"></i></a>
+							<a href="/ruangan/hapus/{{ Crypt::encrypt($r->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus">
+							<i class="fa fa-trash-o"></i></a>
 						</div>
 					</td>
 				</tr>

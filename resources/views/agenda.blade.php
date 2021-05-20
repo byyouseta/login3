@@ -79,12 +79,12 @@
 								<i class="fa fa-sign-in"></i></a>
 							@if((Auth::user()->name==$a->pic) OR (Auth::user()->level=='admin'))
 								@if($now < $a->tanggal) 
-								<a href="/agenda/edit/{{ Crypt::encrypt($a->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
+								<a href="/agenda/edit/{{ Crypt::encrypt($a->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah">
 									<i class="fa fa-edit"></i></a>
 								<a href="/agenda/hapus/{{ Crypt::encrypt($a->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus">
 									<i class="fa fa-trash-o"></i></a>
 								@else
-								<a href="/agenda/edit/{{ Crypt::encrypt($a->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit" disabled>
+								<a href="/agenda/edit/{{ Crypt::encrypt($a->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah" disabled>
 									<i class="fa fa-edit"></i></a>
 								<a href="/agenda/hapus/{{ Crypt::encrypt($a->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus" disabled>
 									<i class="fa fa-trash-o"></i></a>
