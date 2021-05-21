@@ -37,7 +37,7 @@
 				<th>Alamat</th>
 				<th>Unit</th>
 				<th>No Handphone</th>
-				<th>Action</th>
+				<th style="width: 100px;">Action</th>
 			</tr></thead>
 			<tbody>
 				<?php $no=1; ?>
