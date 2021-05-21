@@ -79,7 +79,7 @@ desired effect
     </a>
     <script>
       function display_ct5() {
-          arrhari = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
+          arrhari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
           var x = new Date();
           hari = x.getDay();
           var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';

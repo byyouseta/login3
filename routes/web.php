@@ -55,6 +55,7 @@ Route::post('/agenda/tambahagenda', 'AgendaController@tambahagenda');
 Route::get('/agenda/hapus/{id}', 'AgendaController@delete');
 Route::get('/agenda/edit/{id}', 'AgendaController@edit');
 Route::post('/agenda/update/{id}', 'AgendaController@update');
+Route::get('/agenda/cari', 'AgendaController@cari');
 //Notulen
 Route::post('/notulen/upload/{id}', 'AgendaController@upload');
 Route::get('/notulen/view/{id}', 'AgendaController@view');

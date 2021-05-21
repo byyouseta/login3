@@ -7,6 +7,7 @@ use \Crypt;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Input;
 use DB;
 use DateTime;
 use App\Agenda;
@@ -59,6 +60,31 @@ class AgendaController extends Controller
             
     	// return data ke view
     	return view('agenda', ['agenda' => $query2]);
+    }
+
+    public function cari()
+    {
+        $cari = Input::get('cari');
+        // mengambil semua data pengguna
+        if(!empty($cari)){
+            $query2 = DB::table('agenda')
+                ->join('ruangan', 'agenda.ruangan_id', '=', 'ruangan.id')
+                ->select('agenda.*', 'ruangan.nama as nama_ruangan')
+                ->where('agenda.nama_agenda', 'like', '%'.$cari.'%')
+                ->orWhere('agenda.tanggal', 'like', '%'.$cari.'%')
+                ->orWhere('ruangan.nama', 'like', '%'.$cari.'%')
+                ->orWhere('agenda.status', 'like', '%'.$cari.'%')
+                ->orWhere('agenda.pic', 'like', '%'.$cari.'%')
+                ->orderBy('tanggal', 'asc')
+                ->paginate(2);
+            $query2->appends(['cari' => $cari]);
+
+            // return data ke view
+            return view('agenda', ['agenda' => $query2]);
+        }
+        else{
+            return redirect('/agenda');
+        }
     }
 
     public function tambah()

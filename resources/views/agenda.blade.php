@@ -20,13 +20,16 @@
 				</div>
 
 				<div class="box-tools">
-				<div class="input-group input-group-sm" style="width: 150px;">
-					<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+					<form action="/agenda/cari" method="get">
+						
+						<div class="input-group input-group-sm" style="width: 150px;">
+							<input type="text" name="cari" class="form-control pull-right" placeholder="Search">
 
-					<div class="input-group-btn">
-					<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-					</div>
-				</div>
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 			<!-- /.box-header -->
@@ -46,9 +49,14 @@
 				</tr></thead>
 				<tbody>
 					<?php 
-						$halaman = $agenda->currentPage();
-						$per_page = $agenda->perPage();
-						$no= (($halaman-1)*$per_page) + 1; 
+						if(isset($cari)){
+							$halaman = $agenda->currentPage();
+							$per_page = $agenda->perPage();
+							$no= (($halaman-1)*$per_page) + 1;
+						}
+						else{
+							$no = 1;
+						} 
 						$now = new DateTime();
 						$now = $now->format('Y-m-d'); 
 					?>
@@ -99,11 +107,16 @@
 				</table>
 				<!-- /.box-body -->
 			</div>
+			
 			<div class="box-footer clearfix">
 				
               <ul class="pagination pagination-sm no-margin pull-right">
                
-                <li>{{ $agenda->links() }}</li>
+                <li>
+				
+					{{ $agenda->appends(Request::get('page'))->links()}} 
+				
+				</li>
                 
               </ul>
             </div>
