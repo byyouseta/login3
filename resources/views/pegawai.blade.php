@@ -18,13 +18,15 @@
                       <a href="/pegawai/tambah" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Tambah</a>
                     </div>
 			<div class="box-tools">
-			<div class="input-group input-group-sm" style="width: 150px;">
-				<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+				<form action="/pegawai/cari" method="get">
+				<div class="input-group input-group-sm" style="width: 150px;">
+					<input type="text" name="cari" class="form-control pull-right" placeholder="Search">
 
-				<div class="input-group-btn">
-				<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+					<div class="input-group-btn">
+						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+					</div>
 				</div>
-			</div>
+				</form>
 			</div>
 		</div>
 		<!-- /.box-header -->
@@ -41,28 +43,62 @@
 			</tr></thead>
 			<tbody>
 				<?php $no=1; ?>
-				@foreach($pegawai as $p)
-				<tr>
-					<td>{{ $no++ }}</td>
-					<td>{{ $p->username }}</td>
-					<td>{{ $p->name }}</td>
-					<td>{{ $p->pegawai->alamat }}</td>
-					<td>{{ $p->unit->nama_unit }}</td>
-					<td>{{ $p->pegawai->no_hp }}</td>
-					<td>
-					<div class="btn-group">
-						<a href="/pegawai/edit/{{ Crypt::encrypt($p->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah">
-						<i class="fa fa-edit"></i></a>
-						<a href="/pegawai/hapus/{{ Crypt::encrypt($p->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus">
-						<i class="fa fa-trash-o"></i></a>
-					</div>
-					</td>
-				</tr>
-				@endforeach
+				@if(!empty($cari))
+					@foreach($cari as $p)
+					<tr>
+						<td>{{ $no++ }}</td>
+						<td>{{ $p->username }}</td>
+						<td>{{ $p->name }}</td>
+						<td>{{ $p->alamat }}</td>
+						<td>{{ $p->nama_unit }}</td>
+						<td>{{ $p->no_hp }}</td>
+						<td>
+						<div class="btn-group">
+							<a href="/pegawai/edit/{{ Crypt::encrypt($p->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+							<i class="fa fa-edit"></i></a>
+							<a href="/pegawai/hapus/{{ Crypt::encrypt($p->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus">
+							<i class="fa fa-trash-o"></i></a>
+						</div>
+						</td>
+					</tr>
+					@endforeach
+				@else
+					@foreach($pegawai as $p)
+					<tr>
+						<td>{{ $no++ }}</td>
+						<td>{{ $p->username }}</td>
+						<td>{{ $p->name }}</td>
+						<td>{{ $p->pegawai->alamat }}</td>
+						<td>{{ $p->unit->nama_unit }}</td>
+						<td>{{ $p->pegawai->no_hp }}</td>
+						<td>
+						<div class="btn-group">
+							<a href="/pegawai/edit/{{ Crypt::encrypt($p->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+							<i class="fa fa-edit"></i></a>
+							<a href="/pegawai/hapus/{{ Crypt::encrypt($p->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus">
+							<i class="fa fa-trash-o"></i></a>
+						</div>
+						</td>
+					</tr>
+					@endforeach
+				@endif
 			</tbody>
 			</table>
 		</div>
 		<!-- /.box-body -->
+		<div class="box-footer clearfix">	
+			<ul class="pagination pagination-sm no-margin pull-right">
+			
+			<li>
+				@if(!empty($cari))
+					{{ $cari->appends(Request::get('page'))->links()}}	
+				@else
+					{{ $pegawai->appends(Request::get('page'))->links()}}
+				@endif
+			</li>
+			
+			</ul>
+		</div>
 		</div>
 		<!-- /.box -->
 	</div>

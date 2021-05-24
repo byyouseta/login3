@@ -56,20 +56,20 @@
                             timer = setInterval(showRemaining, 1000);
                         }
 
-                        function display_ct5() {
+                        function display_ct6() {
                             var x = new Date()
                             var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
 
                             var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
                             x1 = x1 + " " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds() + ampm;
-                            document.getElementById('ct5').innerHTML = x1;
-                            display_c5();
+                            document.getElementById('ct6').innerHTML = x1;
+                            display_c6();
                         }
-                        function display_c5(){
+                        function display_c6(){
                             var refresh=1000; // Refresh rate in milli seconds
-                            mytime=setTimeout('display_ct5()',refresh)
+                            mytime=setTimeout('display_ct6()',refresh)
                         }
-                        display_c5()
+                        display_c6()
                             
                             
                         
@@ -80,8 +80,10 @@
                     ?>
                     @if($now < $agenda->tanggal)
                     <tr><th>Waktu menuju Agenda</th><td id="countdown"></td></tr>
+                    @elseif($now == $agenda->tanggal)
+                    <tr><th>Waktu Sekarang</th><td> <h2> <span id='ct6'></span></h2> </td></tr>
                     @else
-                    <tr><th>Waktu Sekarang</th><td> <h2> <span id='ct5'></span></h2> </td></tr>
+                    <tr><th>Waktu </th><td id="countdown"></td></tr>
                     @endif
                 </table>
             </div>

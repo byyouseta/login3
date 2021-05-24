@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="icon" href="{{asset('adminlte/dist/img/LogoRSUP.png')}}">
-  <title>E-Agenda RSUP Surakarta</title>
+  <title>RAPEL RSUP Surakarta</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
@@ -74,17 +74,20 @@ desired effect
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><img src="{{asset('adminlte/dist/img/LogoRSUP.png')}}" alt="User Image">
-      <b>e-Agenda</b>
+      <b>R A P E L</b>
       <small>RSUP Surakarta</small></span>
     </a>
     <script>
       function display_ct5() {
           arrhari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+          arrbulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September",
+                    "Oktober","November","Desember"];
           var x = new Date();
           hari = x.getDay();
+          bulan = x.getMonth();
           var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
 
-          var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+          var x1=x.getDate() + "/" + arrbulan[bulan] + "/" +  x.getFullYear(); 
           x1 = arrhari[hari]+ ", " + x1 + " " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds() + ampm;
           document.getElementById('ct5').innerHTML = x1;
           display_c5();

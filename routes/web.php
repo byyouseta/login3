@@ -34,6 +34,7 @@ Route::post('/pegawai/tambahpegawai', 'PegawaiController@tambahpegawai');
 Route::get('/pegawai/edit/{id}', 'PegawaiController@edit');
 Route::post('/pegawai/update/{id}', 'PegawaiController@update');
 Route::get('/pegawai/hapus/{id}', 'PegawaiController@delete');
+Route::get('/pegawai/cari', 'PegawaiController@cari');
 //Unit
 Route::get('/unit', 'UnitController@index');
 Route::get('/unit/tambah', 'UnitController@tambah');
@@ -63,6 +64,7 @@ Route::get('/notulen/view/{id}', 'AgendaController@view');
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');
 Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');
+Route::get('/undangan/cari', 'AgendaController@cariundangan');
 //Presensi
 Route::get('/presensi/undangan/{id}', 'PresensiController@index');
 Route::post('/presensi/peserta/{file}', 'PresensiController@presensi');

@@ -43,9 +43,9 @@
                         <img src="{{asset('adminlte/dist/img/Logo.png')}}" alt="logo" />
                     </td>
                     <td>
-                        <a href="#"><b>e-Agenda</b></td></tr>
-                    <tr><td>
-                        <h4>RSUP Surakarta</h4></a></td>
+                        <a href="#" ><b>R A P E L</b><br>
+                    
+                        <h5>Rapat Elektronik RSUP Surakarta</h5></a></td>
                     </tr>
                 </table>
             </div>
@@ -98,7 +98,7 @@
         </div>
         <!-- /.login-box-body -->
         <div class="login-box-footer">
-            <h5 class="text-center"><strong>E-Agenda 1.0 <br> Copyright &copy; 2021 IT <a href="https://rsupsurakarta.co.id/">RSUP Surakarta</a><br></strong> 
+            <h5 class="text-center"><strong>Rapel 1.0 <br> Copyright &copy; 2021 IT <a href="https://rsupsurakarta.co.id/">RSUP Surakarta</a><br></strong> 
             All rights reserved.
         </div>
     </div>

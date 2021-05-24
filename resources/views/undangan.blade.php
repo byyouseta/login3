@@ -60,7 +60,7 @@
                     {{ csrf_field() }}
                     <div class="box-header table-hover">
                         <div class="form-group col-md-12">
-                            <label>Tambah Peserta</label>
+                            <label>Daftar Peserta Rapat</label>
                         </div>
                     <div class="form-group col-md-8">
                         <input type="hidden" name="id" value="{{$id}}">
@@ -104,15 +104,18 @@
     </div>
         <div class="box box-primary">
             <div class="box-header">
-        <!-- /.box-header -->
+            <!-- /.box-header -->
                 <h4> <label>Daftar Peserta </label></h4>
-                    <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                    <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
+                <div class="box-tools">
+                    <form action="/undangan/cari" method="get">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="cari" class="form-control pull-right" placeholder="Search">
+                            <input type="hidden" name="id" value="{{ $agenda->id}}">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+					</form>
                 </div>
             </div>
             
@@ -128,9 +131,23 @@
                     <th>Waktu Presensi</th>
                     <th>Action</th>
                 </tr>
-                
-                    @foreach($agenda->user as $user)
+                @if(!empty($cari))
+                    @foreach($cari as $user)
                     <tr>
+                        <td>{{ $no++}}</td>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->nama_unit}}</td>
+                        <td>@if($user->presensi=='sudah')
+                            <span class="label label-success">
+                        @else
+                            <span class="label label-danger">
+                        @endif
+                            {{$user->presensi}}</span></td>
+                        <td>{{$user->presensi_at}}</td>
+                    @endforeach
+                @else
+                    @foreach($agenda->user as $user)
+                        <tr>
                         <td>{{ $no++}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->unit->nama_unit}}</td>
@@ -155,6 +172,7 @@
                         </td>
                         </tr>
                     @endforeach
+                @endif
                 </table>
             </div>
             

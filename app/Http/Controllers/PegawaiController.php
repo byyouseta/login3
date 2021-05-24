@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Crypt;
+use Illuminate\Support\Facades\Input;
+use DB;
 use App\User;
 use App\Pegawai;
 use App\Unit;
@@ -21,9 +23,34 @@ class PegawaiController extends Controller
     {
         session()->put('halaman','master');
     	// mengambil semua data pengguna
-    	$pegawai = User::all();
+    	$pegawai = User::paginate(2);
     	// return data ke view
     	return view('pegawai', ['pegawai' => $pegawai]);
+    }
+
+    public function cari()
+    {
+        $cari = Input::get('cari');
+    	// mengambil semua data pengguna
+        if(!empty($cari)){
+            $pegawai = DB::table('users')
+                    ->join('unit', 'unit.id', '=', 'users.unit_id')
+                    ->join('pegawai', 'pegawai.user_id', '=', 'users.id')
+                    ->select('users.*', 'unit.nama_unit as nama_unit', 'pegawai.alamat as alamat',
+                     'pegawai.no_hp as no_hp')
+                    ->where('users.name', 'like', '%'.$cari.'%')
+                    ->orWhere('pegawai.alamat', 'like', '%'.$cari.'%')
+                    ->orWhere('unit.nama_unit', 'like', '%'.$cari.'%')
+                    ->orderBy('users.name', 'asc')
+                    ->paginate(2);
+            $pegawai->appends(['cari' => $cari]);
+
+            // return data ke view
+            return view('pegawai', ['cari' => $pegawai]);
+        }
+        else{
+            return redirect('/pegawai');
+        }
     }
 
     public function tambah()

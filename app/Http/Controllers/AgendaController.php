@@ -235,6 +235,41 @@ class AgendaController extends Controller
         return redirect("/agenda/undangan/$id");
     }
 
+    public function cariundangan()
+    {
+        $cari = Input::get('cari');
+        $id = Input::get('id');
+        // mengambil semua data pengguna
+        if(!empty($cari)){
+            $query2 = DB::table('users')
+                ->join('unit', 'unit.id', '=', 'users.unit_id')
+                ->join('agenda_user', 'agenda_user.user_id', '=', 'users.id')
+                ->select('users.*', 'unit.nama_unit', 'agenda_user.presensi', 'agenda_user.presensi_at')
+                ->Where('agenda_user.agenda_id', '=', $id)
+                ->Where('users.name', 'like', '%'.$cari.'%')
+                ->orWhere('agenda_user.presensi', 'like', '%'.$cari.'%')
+                ->orderBy('agenda_user.presensi_at', 'asc')
+                ->get();
+
+            $agenda = Agenda::find($id);
+            // lempar juga data pegawai
+            $pegawai = User::all();
+            $peserta = DB::table('agenda_user')
+                ->where('presensi', 'sudah')
+                ->where('agenda_id', $id)
+                ->count();
+            //$query2->appends(['cari' => $cari]);
+            //return view('undangan', ['agenda' => $query2]);
+            return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai, 'presensi' => $peserta,
+            'cari' => $query2]);
+        }
+        else{
+            // return data ke view
+            $id = Crypt::encrypt($id);
+            return redirect("/agenda/undangan/$id");
+        }
+    }
+
     public function upload($id, Request $request){
         $this->validate($request, [
 			'file' => 'required|mimes:pdf|max:2048',
