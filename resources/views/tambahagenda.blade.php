@@ -22,7 +22,7 @@
                 <!-- text input -->
                     <div class="form-group">
                         <label>Nama Agenda</label>
-                        <input type="text" class="form-control" placeholder="Masukkan Nama Agenda" name="nama_agenda">
+                        <input type="text" class="form-control" placeholder="Masukkan Nama Agenda" name="nama_agenda" value="{{ old('nama_agenda') }}">
                         @if($errors->has('nama_agenda'))
                             <div class="text-danger">
                                 {{ $errors->first('nama_agenda')}}
@@ -52,7 +52,8 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control pull-right" id="datepicker" name="tanggal" autocomplete="off">
+                        <input type="text" class="form-control pull-right" id="datepicker" name="tanggal" autocomplete="off"
+                            value="{{ old('tanggal') }}">
                         </div>
                         <!-- /.input group -->
                         @if($errors->has('tanggal'))
@@ -67,7 +68,7 @@
                         <label>Waktu Mulai:</label>
 
                         <div class="input-group">
-                            <input type="text" class="form-control timepicker" name="waktu_mulai">
+                            <input type="text" class="form-control timepicker" name="waktu_mulai" value="{{ old('waktu_mulai') }}">
 
                             <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
@@ -88,7 +89,7 @@
                         <label>Waktu Selesai:</label>
 
                         <div class="input-group">
-                            <input type="text" class="form-control timepicker" name="waktu_selesai">
+                            <input type="text" class="form-control timepicker" name="waktu_selesai" value="{{ old('waktu_selesai') }}">
 
                             <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
@@ -106,7 +107,7 @@
 
                     <div class="form-group">
                         <label>Keterangan</label>
-                        <textarea class="form-control" rows="3" placeholder="Masukkan Keterangan" name="keterangan"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="Masukkan Keterangan" name="keterangan">{{ old('keterangan') }}</textarea>
                         @if($errors->has('keterangan'))
                             <div class="text-danger">
                                 {{ $errors->first('keterangan')}}

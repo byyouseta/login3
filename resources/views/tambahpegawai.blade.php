@@ -22,7 +22,7 @@
                 <!-- text input -->
                     <div class="form-group">
                         <label>NIP</label>
-                        <input type="text" class="form-control" placeholder="Masukkan NIP" name="username">
+                        <input type="text" class="form-control" placeholder="Masukkan NIP" name="username" value="{{ old('username') }}">
                         @if($errors->has('username'))
                             <div class="text-danger">
                                 {{ $errors->first('username')}}
@@ -32,7 +32,7 @@
 
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" placeholder="Masukkan Nama" name="name">
+                        <input type="text" class="form-control" placeholder="Masukkan Nama" name="name" value="{{ old('name') }}">
                         @if($errors->has('name'))
                             <div class="text-danger">
                                 {{ $errors->first('name')}}
@@ -42,12 +42,12 @@
 
                     <div class="form-group">
                         <label>Alamat</label>
-                        <textarea class="form-control" rows="3" placeholder="Masukkan Alamat" name="alamat"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="Masukkan Alamat" name="alamat" >{{ old('alamat') }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label>No Handphone</label>
-                        <input type="text" class="form-control" placeholder="Masukkan No Handphone" name="no_hp">
+                        <input type="text" class="form-control" placeholder="Masukkan No Handphone" name="no_hp" value="{{ old('no_hp') }}">
                         @if($errors->has('no_hp'))
                             <div class="text-danger">
                                 {{ $errors->first('no_hp')}}
@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" placeholder="Masukkan Email" name="email">
+                        <input type="text" class="form-control" placeholder="Masukkan Email" name="email" value="{{ old('email') }}">
                         @if($errors->has('email'))
                             <div class="text-danger">
                                 {{ $errors->first('email')}}

@@ -22,7 +22,7 @@
                 <!-- text input -->
                     <div class="form-group">
                         <label>Nama Unit</label>
-                        <input type="text" class="form-control" placeholder="Masukkan Nama Unit" name="nama_unit">
+                        <input type="text" class="form-control" placeholder="Masukkan Nama Unit" name="nama_unit" value="{{ old('nama_unit') }}">
                         @if($errors->has('nama_unit'))
                             <div class="text-danger">
                                 {{ $errors->first('nama_unit')}}
@@ -32,7 +32,7 @@
 
                     <div class="form-group">
                         <label>Keterangan</label>
-                        <textarea class="form-control" rows="3" placeholder="Masukkan Keterangan" name="keterangan"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="Masukkan Keterangan" name="keterangan">{{ old('keterangan') }}</textarea>
                     </div>
 
                     <div class="box-footer">

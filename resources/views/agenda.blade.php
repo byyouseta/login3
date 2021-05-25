@@ -14,11 +14,14 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
+				
 				<div class="btn-group">
+					@if(Auth::user()->level=="admin")
 					<a href="/agenda/tambah" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="right" title="Tambah Agenda">
 					<i class="fa fa-plus-circle"></i> Tambah</a>
+					@endif
 				</div>
-
+				
 				<div class="box-tools">
 					<form action="/agenda/cari" method="get">
 						

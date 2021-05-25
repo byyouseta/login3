@@ -51,7 +51,7 @@ Route::put('/ruangan/update/{id}', 'RuanganController@update');
 Route::get('/ruangan/hapus/{id}', 'RuanganController@delete');
 //Agenda
 Route::get('/agenda', 'AgendaController@index');
-Route::get('/agenda/tambah', 'AgendaController@tambah');
+Route::get('/agenda/tambah', 'AgendaController@tambah')->middleware('cekstatus');
 Route::post('/agenda/tambahagenda', 'AgendaController@tambahagenda');
 Route::get('/agenda/hapus/{id}', 'AgendaController@delete');
 Route::get('/agenda/edit/{id}', 'AgendaController@edit');
