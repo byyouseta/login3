@@ -41,7 +41,15 @@
                     </td>
                 </tr>
                 
-                <tr><th>Keterangan</th><td>{{$agenda->keterangan}}</td></tr>
+                <tr><th>Keterangan</th><td>{{$agenda->keterangan}}</td>
+                    <th>Daftar Hadir</th><td>
+                    @if (!empty($agenda->daftar))
+                    {{$agenda->daftar}} 
+                    <a href="/daftarhadir/view/{{ $agenda->daftar }} " target="_blank" class="label label-success">Lihat File</a>
+                    @else
+                    <span class="label label-warning">belum ada Daftar Hadir</span>
+                    @endif
+                    </td></tr>
                 
                 
             </table>
@@ -90,8 +98,8 @@
 					{{ csrf_field() }}
  
 					<div class="form-group col-md-8">
-						<strong>File Notulen dalam bentuk PDF</strong>
-						<input type="file" name="file">
+						<strong>File Notulen dalam bentuk PDF (Maksimal 2Mb)</strong>
+						<input type="file" name="filepdf">
                         
 					</div>
  
@@ -100,6 +108,31 @@
                     </div>
 				</form>
             @endif
+                @if($errors->has('filepdf'))
+                    <div class="text-danger">
+                        {{ $errors->first('filepdf')}}
+                    </div>
+                @endif
+            @if(($now >= $agenda->tanggal) AND (empty($agenda->daftar)))
+                <form action="/daftarhadir/upload/{{ $id }}" method="POST" enctype="multipart/form-data">
+					{{ csrf_field() }}
+ 
+					<div class="form-group col-md-8">
+						<strong>File Daftar Hadir dalam bentuk PDF/JPEG (Maksimal 2Mb)</strong>
+						<input type="file" name="filedaftar">
+                        
+					</div>
+ 
+					<div class="form-group col-md-2">
+					    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-upload"> Upload</i></button>
+                    </div>
+				</form>
+            @endif
+                @if($errors->has('filedaftar'))
+                    <div class="text-danger">
+                        {{ $errors->first('filedaftar')}}
+                    </div>
+                @endif
         </div>
     </div>
         <div class="box box-primary">

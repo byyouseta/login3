@@ -60,6 +60,9 @@ Route::get('/agenda/cari', 'AgendaController@cari');
 //Notulen
 Route::post('/notulen/upload/{id}', 'AgendaController@upload');
 Route::get('/notulen/view/{id}', 'AgendaController@view');
+//Daftar Hadir
+Route::post('/daftarhadir/upload/{id}', 'AgendaController@daftarhadir');
+Route::get('/daftarhadir/view/{id}', 'AgendaController@viewdaftar');
 //Undangan
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');

@@ -35,7 +35,8 @@ class AgendaController extends Controller
             //->select('agenda.*', 'ruangan.nama as nama_ruangan', 'agenda_user.user_id')
             ->groupBy( 'agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
                 'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
-                'agenda.pic', 'agenda.notulen', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
+                'agenda.pic', 'agenda.notulen','agenda.daftar', 'agenda.updated_at', 'agenda.created_at', 
+                'ruangan.nama')
             ->orderBy('agenda.status', 'desc')
             ->orderBy('tanggal', 'asc')
             
@@ -272,12 +273,12 @@ class AgendaController extends Controller
 
     public function upload($id, Request $request){
         $this->validate($request, [
-			'file' => 'required|mimes:pdf|max:2048',
+			'filepdf' => 'required|mimes:pdf|max:2048',
 			
 		]);
         
         // menyimpan data file yang diupload ke variabel $file
-		$file = $request->file('file');
+		$file = $request->file('filepdf');
         $random = Str::random(12);
         $nama_file = time()."_".$random.'.pdf';
  
@@ -291,13 +292,50 @@ class AgendaController extends Controller
         $agenda->notulen = $nama_file;
         $agenda->status = 'Done';
         $agenda->save();
+        
+        $id = Crypt::encrypt($id);
+        return redirect("/agenda/undangan/$id");
+    }
 
+    public function daftarhadir($id, Request $request){
+        $this->validate($request, [
+			'filedaftar' => 'required|mimes:pdf,jpeg,jpg|max:2048',
+			
+		]);
+        
+        // menyimpan data file yang diupload ke variabel $file
+		$file = $request->file('filedaftar');
+        $random = Str::random(12);
+        $extension = $file->getClientOriginalExtension();
+        $nama_file = time()."_".$random.'.'.$extension;
+ 
+		//$nama_file = time()."_".$file->getClientOriginalName();
+ 
+      	// isi dengan nama folder tempat kemana file diupload
+		$tujuan_upload = 'daftar_hadir';
+		$file->move($tujuan_upload,$nama_file);
+
+        $agenda = Agenda::find($id);
+        $agenda->daftar = $nama_file;
+        //$agenda->status = 'Done';
+        $agenda->save();
+        
+        $id = Crypt::encrypt($id);
         return redirect("/agenda/undangan/$id");
     }
 
     public function view($file) {
         // Force download of the file
         $this->file_to_download   = 'notulen_rapat/' . $file;
+        //return response()->streamDownload(function () {
+        //    echo file_get_contents($this->file_to_download);
+        //}, $file.'.pdf');
+        return response()->file($this->file_to_download);
+    }
+
+    public function viewdaftar($file) {
+        // Force download of the file
+        $this->file_to_download   = 'daftar_hadir/' . $file;
         //return response()->streamDownload(function () {
         //    echo file_get_contents($this->file_to_download);
         //}, $file.'.pdf');
