@@ -23,7 +23,7 @@ class PegawaiController extends Controller
     {
         session()->put('halaman','master');
     	// mengambil semua data pengguna
-    	$pegawai = User::paginate(2);
+    	$pegawai = User::paginate(10);
     	// return data ke view
     	return view('pegawai', ['pegawai' => $pegawai]);
     }
@@ -42,7 +42,7 @@ class PegawaiController extends Controller
                     ->orWhere('pegawai.alamat', 'like', '%'.$cari.'%')
                     ->orWhere('unit.nama_unit', 'like', '%'.$cari.'%')
                     ->orderBy('users.name', 'asc')
-                    ->paginate(2);
+                    ->paginate(10);
             $pegawai->appends(['cari' => $cari]);
 
             // return data ke view
@@ -63,10 +63,10 @@ class PegawaiController extends Controller
     public function tambahpegawai(Request $request){
         
         $this->validate($request,[
-            'username' => 'required|min:6',
+            'username' => 'required|min:6|unique:users',
             'name' => 'required',
-            'no_hp' => 'required|min:10',
-            'email' => 'required|email',
+            'no_hp' => 'required|min:10|unique:pegawai',
+            'email' => 'required|email|unique:users',
             'level' => 'required',
         ]);
 

@@ -35,12 +35,10 @@ class HomeController extends Controller
                     ->where('agenda.status', '=','Dijadwalkan')
                     ->count();
         $count_pegawai = DB::table('pegawai')->count();
-        $count_ruangan = DB::table('ruangan')->count();
         $count_agenda2 = DB::table('agenda')
                     ->where('agenda.status', '=','Pengajuan')
                     ->count();
         
-
         return view('home', [
             'agenda_terjadwal' => $count_agenda1,
             'agenda_diajukan' => $count_agenda2,

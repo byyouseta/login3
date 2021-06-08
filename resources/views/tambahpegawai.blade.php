@@ -68,9 +68,9 @@
                     <div class="form-group">
                         <label>Unit</label>
                         <select class="form-control" name="unit">
-                            <option value="" selected>Pilih</option>
+                            <option value="" >Pilih</option>
                             @foreach($unit as $u)
-                                <option value="{{ $u->id}}">{{ $u->nama_unit}}</option>
+                                <option value="{{ $u->id}}" {{ old("unit") == $u->id ? "selected" :""}}>{{ $u->nama_unit}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('unit'))
@@ -84,8 +84,8 @@
                         <label>Hak Akses</label>
                         <select class="form-control" name="level">
                             <option value="" selected>Pilih</option>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
+                            <option value="user" {{ old("level") == 'user' ? "selected" :""}}>User</option>
+                            <option value="admin" {{ old("level") == 'admin' ? "selected" :""}}>Admin</option>
                         </select>
                         @if($errors->has('level'))
                             <div class="text-danger">

@@ -49,7 +49,8 @@
 					<th>Status</th>
 					<!--<th>Jumlah Peserta</th>-->
 					<th>PIC</th>
-					<th>Action</th>
+					<th>Diajukan</th>
+					<th style="width: 150px;"> Action</th>
 				</tr></thead>
 				<tbody>
 					<?php 
@@ -84,6 +85,7 @@
 						</td>
 						<!--<td></td>-->
 						<td>{{ $a->pic }}</td>
+						<td>{{ $a->created_at }}</td>
 						<td>
 						<div class="btn-group">
 							<a href="/agenda/undangan/{{ Crypt::encrypt($a->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Detail">
