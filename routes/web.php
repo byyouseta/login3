@@ -51,12 +51,13 @@ Route::put('/ruangan/update/{id}', 'RuanganController@update');
 Route::get('/ruangan/hapus/{id}', 'RuanganController@delete');
 //Agenda
 Route::get('/agenda', 'AgendaController@index');
-Route::get('/agenda/tambah', 'AgendaController@tambah')->middleware('cekstatus');
+Route::get('/agenda/tambah', 'AgendaController@tambah');
 Route::post('/agenda/tambahagenda', 'AgendaController@tambahagenda');
 Route::get('/agenda/hapus/{id}', 'AgendaController@delete');
 Route::get('/agenda/edit/{id}', 'AgendaController@edit');
 Route::post('/agenda/update/{id}', 'AgendaController@update');
 Route::get('/agenda/cari', 'AgendaController@cari');
+Route::post('/agenda/verifikasi', 'AgendaController@verifikasi');
 //Notulen
 Route::post('/notulen/upload/{id}', 'AgendaController@upload');
 Route::get('/notulen/view/{id}', 'AgendaController@view');
@@ -67,7 +68,7 @@ Route::get('/daftarhadir/view/{id}', 'AgendaController@viewdaftar');
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');
 Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');
-Route::get('/undangan/cari', 'AgendaController@cariundangan');
+Route::get('/undangan/cari/{id}', 'AgendaController@cariundangan');
 //Presensi
 Route::get('/presensi/undangan/{id}', 'PresensiController@index');
 Route::post('/presensi/peserta/{file}', 'PresensiController@presensi');

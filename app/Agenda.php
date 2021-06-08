@@ -11,7 +11,7 @@ class Agenda extends Model
 
     protected $fillable = [
         'nama_agenda', 'tanggal', 'waktu_mulai', 'waktu_selesai', 'ruangan_id', 'status', 
-        'pic', 'notulen', 'keterangan', 
+        'pic', 'notulen', 'keterangan', 'verifikator', 'catatan', 'daftar'
     ];
 
     public function user()

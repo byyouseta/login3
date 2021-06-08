@@ -50,8 +50,8 @@
             <span class="info-box-icon bg-green"><i class="fa fa-calendar-check-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Agenda</span>
-              <span class="info-box-number">{{$agenda}}</span>
+              <span class="info-box-text">Agenda Dijadwalkan</span>
+              <span class="info-box-number">{{$agenda_terjadwal}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -60,24 +60,24 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa fa-calendar-plus-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">User Terdaftar</span>
+              <span class="info-box-text">Agenda Pengajuan</span>
+              <span class="info-box-number">{{$agenda_diajukan}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pegawai</span>
               <span class="info-box-number">{{$pegawai}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-bed"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Ruangan</span>
-              <span class="info-box-number">{{$ruangan}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>

@@ -16,10 +16,11 @@
 			<div class="box-header">
 				
 				<div class="btn-group">
-					@if(Auth::user()->level=="admin")
+					
 					<a href="/agenda/tambah" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="right" title="Tambah Agenda">
 					<i class="fa fa-plus-circle"></i> Tambah</a>
-					@endif
+					
+					
 				</div>
 				
 				<div class="box-tools">
@@ -72,12 +73,13 @@
 						<td>{{ $a->waktu_selesai }}</td>
 						<td>{{ $a->nama_ruangan }}</td>
 						<td>
-							@if($a->status=="Scheduled")
+							@if($a->status=="Dijadwalkan")
 								<span class="label label-success">{{$a->status}}</span>
 							
-							@else
+							@elseif($a->status=="Pengajuan")
 								<span class="label label-warning">{{$a->status}}</span>
-							
+							@else
+								<span class="label label-primary">{{$a->status}}</span>
 							@endif
 						</td>
 						<!--<td></td>-->

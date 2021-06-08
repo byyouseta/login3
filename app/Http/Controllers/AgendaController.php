@@ -36,7 +36,7 @@ class AgendaController extends Controller
             ->groupBy( 'agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
                 'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
                 'agenda.pic', 'agenda.notulen','agenda.daftar', 'agenda.updated_at', 'agenda.created_at', 
-                'ruangan.nama')
+                'ruangan.nama', 'agenda.verifikator','agenda.catatan')
             ->orderBy('agenda.status', 'desc')
             ->orderBy('tanggal', 'asc')
             
@@ -50,9 +50,9 @@ class AgendaController extends Controller
             //->groupBy( 'agenda_user.user_id','agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
              //   'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
             //    'agenda.pic', 'agenda.notulen', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
-            ->orderBy('agenda.status', 'desc')
+            ->orderBy('agenda.status', 'asc')
             ->orderBy('tanggal', 'asc')
-            ->paginate(2);
+            ->paginate(10);
 
         $agenda = Agenda::
             paginate(10);
@@ -77,7 +77,7 @@ class AgendaController extends Controller
                 ->orWhere('agenda.status', 'like', '%'.$cari.'%')
                 ->orWhere('agenda.pic', 'like', '%'.$cari.'%')
                 ->orderBy('tanggal', 'asc')
-                ->paginate(2);
+                ->paginate(10);
             $query2->appends(['cari' => $cari]);
 
             // return data ke view
@@ -124,7 +124,7 @@ class AgendaController extends Controller
         $agenda->waktu_mulai = $waktu_mulai;
         $agenda->waktu_selesai = $waktu_selesai;
         $agenda->keterangan = $request->keterangan;
-        $agenda->status = 'Scheduled';
+        $agenda->status = 'Pengajuan';
         $agenda->pic = $pic;
         $agenda->save();
 
@@ -236,10 +236,10 @@ class AgendaController extends Controller
         return redirect("/agenda/undangan/$id");
     }
 
-    public function cariundangan()
+    public function cariundangan($id)
     {
         $cari = Input::get('cari');
-        $id = Input::get('id');
+        $id = Crypt::decrypt($id);
         // mengambil semua data pengguna
         if(!empty($cari)){
             $query2 = DB::table('users')
@@ -247,10 +247,21 @@ class AgendaController extends Controller
                 ->join('agenda_user', 'agenda_user.user_id', '=', 'users.id')
                 ->select('users.*', 'unit.nama_unit', 'agenda_user.presensi', 'agenda_user.presensi_at')
                 ->Where('agenda_user.agenda_id', '=', $id)
-                ->Where('users.name', 'like', '%'.$cari.'%')
-                ->orWhere('agenda_user.presensi', 'like', '%'.$cari.'%')
+                ->Where( function ( $query ) use ($cari)
+                    {
+                        $query->Where( 'agenda_user.presensi', 'like', '%'.$cari.'%' )
+                            ->orWhere( 'users.name', 'like', '%'.$cari.'%' );
+                    })
+                //->Where()
+                //->orWhere()
                 ->orderBy('agenda_user.presensi_at', 'asc')
                 ->get();
+            
+            /*$query2 = Agenda::whereHas('user', function ($q) use ($id, $cari) {
+                $q->where('agenda_id', $id)
+                    ->orWhere('users.name', 'like', '%'.$cari.'%')
+                    ->orWhere('agenda_user.presensi', 'like', '%'.$cari.'%');
+            })->get();*/
 
             $agenda = Agenda::find($id);
             // lempar juga data pegawai
@@ -261,6 +272,7 @@ class AgendaController extends Controller
                 ->count();
             //$query2->appends(['cari' => $cari]);
             //return view('undangan', ['agenda' => $query2]);
+            $id = Crypt::encrypt($id);
             return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai, 'presensi' => $peserta,
             'cari' => $query2]);
         }
@@ -340,5 +352,23 @@ class AgendaController extends Controller
         //    echo file_get_contents($this->file_to_download);
         //}, $file.'.pdf');
         return response()->file($this->file_to_download);
+    }
+
+    public function verifikasi(Request $request) {
+        
+        $this->validate($request,[
+            'catatan' => 'required',
+        ]);
+
+        $id = $request->get('id');
+        
+        $agenda = Agenda::find($id);
+        $agenda->verifikator = $request->get('verifikator');
+        $agenda->catatan = $request->get('catatan');
+        $agenda->status = 'Dijadwalkan';
+        $agenda->save();
+        
+        $id = Crypt::encrypt($id);
+        return redirect("/agenda/undangan/$id");
     }
 }
