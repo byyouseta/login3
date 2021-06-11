@@ -11,9 +11,17 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
+        
         <div class="box-header">
+            @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    {{ $error }} <br/>
+                    @endforeach
+                </div>
+            @endif
             <a href="/agenda" class="btn btn-warning">Kembali</a>
-            @if($agenda->status == 'Pengajuan')
+            @if(($agenda->status == 'Pengajuan') AND (Auth::user()->level=='admin'))
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Verifikasi</button>
             @endif
         </div>
@@ -46,7 +54,7 @@
                 </tr>
                 
                 <tr><th>Keterangan</th><td>{{$agenda->keterangan}}</td>
-                    <th>Daftar Hadir</th><td>
+                    <th>Daftar Hadir Luring</th><td>
                     @if (!empty($agenda->daftar))
                     {{$agenda->daftar}} 
                     <a href="/daftarhadir/view/{{ $agenda->daftar }} " target="_blank" class="label label-success">Lihat File</a>
@@ -64,7 +72,10 @@
                     @endif
                     {{$agenda->status}}</span>
                     </td></tr>
-                
+                @if(($agenda->status == 'Dijadwalkan') OR ($agenda->status == 'Ditolak' ))
+                    <tr><th>Varifikator</th><td>{{$agenda->verifikator}}</td></tr>
+                    <tr><th>Catatan</th><td>{{$agenda->catatan}}</td></tr>
+                @endif
             </table>
             
         </div>
@@ -74,10 +85,11 @@
         $now = new DateTime();
         $now = $now->format('Y-m-d'); 
     ?>
-    @if(($agenda->status <> 'Pengajuan') AND (Auth::user()->name==$agenda->pic))
+    @if($agenda->status <> 'Pengajuan')
+
     <div class="box box-success">
         <div class="box-body">
-            @if(($now <= $agenda->tanggal) AND (Auth::user()->level=='admin'))
+            @if(($now <= $agenda->tanggal) AND ((Auth::user()->level=='admin') OR (Auth::user()->name==$agenda->pic)))
                 <form role="form" action="/undangan/tambahpeserta/{{ $id }}" method="post">
                     {{ csrf_field() }}
                     <div class="box-header table-hover">
@@ -107,7 +119,7 @@
                     </div>
                 </form>
             @endif
-            @if(($now >= $agenda->tanggal) AND (empty($agenda->notulen)))
+            @if(($now >= $agenda->tanggal) AND ((empty($agenda->notulen)) AND ((Auth::user()->name==$agenda->pic) OR (Auth::user()->level=='admin'))))
                 <form class="form-inline" action="/notulen/upload/{{ $id }}" method="POST" enctype="multipart/form-data">
 					{{ csrf_field() }}
 
@@ -127,7 +139,7 @@
                         {{ $errors->first('filepdf')}}
                     </div>
                 @endif
-            @if(($now >= $agenda->tanggal) AND (empty($agenda->daftar)))
+            @if(($now >= $agenda->tanggal) AND ((empty($agenda->daftar)) AND ((Auth::user()->name==$agenda->pic) OR (Auth::user()->level=='admin'))))
                 <form action="/daftarhadir/upload/{{ $id }}" method="POST" enctype="multipart/form-data">
 					{{ csrf_field() }}
  
@@ -149,7 +161,7 @@
                 @endif
         </div>
     </div>
-    @endif 
+    @endif
     <div class="box box-primary">
         <div class="box-header">
         <!-- /.box-header -->
@@ -247,7 +259,15 @@
                         <input type='hidden' class="form-control" name='id' value='{{$agenda->id}}' />
                         <input type='text' class="form-control" name='verifikator' value='{{Auth::user()->name}}' disabled/>
                     </div>
-                
+                    <div class="form-group">
+                        <select class="form-control" style="width: 100%;" name="status">
+                        <option selected value="" active>Pilih</option>
+                            
+                                <option value="Dijadwalkan">Dijadwalkan</option>
+                                <option value="Ditolak">Ditolak</option>
+                        </select>
+                        
+                    </div>
                     <div class="form-group">
                         <label>Catatan</label>
                         <textarea class="form-control" rows="3" name='catatan' placeholder="Catatan"></textarea>

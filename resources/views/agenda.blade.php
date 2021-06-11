@@ -74,7 +74,9 @@
 						<td>{{ $a->waktu_selesai }}</td>
 						<td>{{ $a->nama_ruangan }}</td>
 						<td>
-							@if($a->status=="Dijadwalkan")
+							@if(($a->tanggal<$now) AND ($a->status<>"Selesai"))
+								<span class="label label-danger">{{$a->status}}</span>
+							@elseif($a->status=="Dijadwalkan")
 								<span class="label label-success">{{$a->status}}</span>
 							
 							@elseif($a->status=="Pengajuan")

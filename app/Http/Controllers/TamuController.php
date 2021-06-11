@@ -33,28 +33,6 @@ class TamuController extends Controller
             //'output' => 'required',
 		]);
  
-		// menyimpan data file yang diupload ke variabel $file
-		//$img = $request->get('output');
-
-        //$img1 = str_replace('data:image/png;base64,', '', $img);
-        //$img = str_replace(' ', '+', $img1);
-        //$data = base64_decode($img1);
-        //$file = UPLOAD_DIR . uniqid() . '.jpeg';
-        //$success = file_put_contents($file, $data);
-
-        //echo 'data base64: '.$img;
-        //$random = Str::random(12);
-        //$nama_file = time()."_".$random.'.png';
-        //$file = file_put_contents($nama_file, $data);
-      	// isi dengan nama folder tempat kemana file diupload
-		//$tujuan_upload = 'ttd_tamu';
-        //Storage::disk('public')->put($nama_file, $data);
-        
-        //$image = Image::make($request->get('output'));
-        //$image->save('public/bar.jpg');
-
-        // upload file
-		//$file->move($tujuan_upload,$file);
         $cari = Tamu::whereHas('agenda', function ($query) use($request) {
             $query->where('nip', '=', $request->nip)
                 ->where('agenda_id','=', $request->agenda);
@@ -70,12 +48,10 @@ class TamuController extends Controller
             
             $tamu->save();
 
-            return redirect("/tamu");
+            return redirect("/tamu")->with('message', 'Presensi berkasil disimpan!');
         }
         else{
-            return redirect("/tamu")->withErrors(['Pesan Error', 'Peserta sudah pernah ditambahkan']);
+            return redirect("/tamu")->withErrors(['Pesan Error', 'Peserta sudah pernah presensi!']);
         } 
-
-        //return redirect("/tamu");
 	}
 }

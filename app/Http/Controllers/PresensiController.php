@@ -39,6 +39,7 @@ class PresensiController extends Controller
         //$agenda->user()->updateExistingPivot($user_id, array('presensi' => 'sudah', 'presensi_at' => $now), false);
         Agenda::find($id)->user()->updateExistingPivot($user_id, array('presensi' => 'sudah', 'presensi_at' => $now), false);
 
+        $id = Crypt::encrypt($id);
         return redirect("presensi/undangan/$id");
     }
 }

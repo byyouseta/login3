@@ -50,7 +50,7 @@
                 <div class="form-group has-feedback">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Username" value="{{ old('email') }}">
+                        <input type="text" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="NIP / alamat email" value="{{ old('email') }}">
                     </div>
                     @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">

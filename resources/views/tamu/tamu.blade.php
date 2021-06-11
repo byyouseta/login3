@@ -43,6 +43,11 @@
           @endforeach
         </div>
         @endif
+        @if(session()->has('message'))
+          <div class="alert alert-success">
+              {{ session()->get('message') }}
+          </div>
+        @endif
         
         <form method="post" action="/presensitamu" enctype="multipart/form-data">
           {{ csrf_field() }}

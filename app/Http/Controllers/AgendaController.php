@@ -302,7 +302,7 @@ class AgendaController extends Controller
 
         $agenda = Agenda::find($id);
         $agenda->notulen = $nama_file;
-        $agenda->status = 'Done';
+        $agenda->status = 'Selesai';
         $agenda->save();
         
         $id = Crypt::encrypt($id);
@@ -329,7 +329,6 @@ class AgendaController extends Controller
 
         $agenda = Agenda::find($id);
         $agenda->daftar = $nama_file;
-        //$agenda->status = 'Done';
         $agenda->save();
         
         $id = Crypt::encrypt($id);
@@ -357,13 +356,15 @@ class AgendaController extends Controller
     public function verifikasi(Request $request) {
         
         $this->validate($request,[
+            'status' => 'required',
             'catatan' => 'required',
         ]);
 
         $id = $request->get('id');
         
         $agenda = Agenda::find($id);
-        $agenda->verifikator = $request->get('verifikator');
+        $verifikator = Auth::user()->name;
+        $agenda->verifikator = $verifikator;
         $agenda->catatan = $request->get('catatan');
         $agenda->status = 'Dijadwalkan';
         $agenda->save();
