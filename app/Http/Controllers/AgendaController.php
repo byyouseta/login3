@@ -51,7 +51,7 @@ class AgendaController extends Controller
              //   'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
             //    'agenda.pic', 'agenda.notulen', 'agenda.updated_at', 'agenda.created_at', 'ruangan.nama')
             ->orderBy('agenda.status', 'asc')
-            ->orderBy('tanggal', 'asc')
+            ->orderBy('tanggal', 'desc')
             ->paginate(10);
 
         $agenda = Agenda::

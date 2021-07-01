@@ -72,7 +72,7 @@ Route::get('/undangan/cari/{id}', 'AgendaController@cariundangan');
 //Presensi
 Route::get('/presensi/undangan/{id}', 'PresensiController@index');
 Route::post('/presensi/peserta/{file}', 'PresensiController@presensi');
-
+Route::get('/presensi/hadir/{id}', 'PresensiController@hadir');
 
 //tamu
 Route::get('/tamu', 'TamuController@index');

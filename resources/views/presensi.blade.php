@@ -112,10 +112,10 @@
                     @foreach($agenda->user as $user)
                         @if($user->pivot->user_id == $pegawai->id)
                             @if(($now == $agenda->tanggal) AND ($user->pivot->presensi=='belum'))
-                            <button type="submit" class="btn btn-success btn-block">Klik untuk Presensi</button>
+                            <button type="submit" class="btn btn-success btn-block">KLIK UNTUK PRESENSI</button>
                             
                             @else
-                            <button type="submit" class="btn btn-success btn-block" disabled>Klik untuk Presensi</button>
+                            <button type="submit" class="btn btn-success btn-block" disabled>KLIK UNTUK PRESENSI</button>
                             
                             @endif
                         @endif

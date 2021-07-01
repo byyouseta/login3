@@ -71,11 +71,13 @@
                         <span class="label label-primary">
                     @endif
                     {{$agenda->status}}</span>
+                    </td><th>Daftar Hadir Daring</th><td>
+                    <a href="/presensi/hadir/{{ Crypt::encrypt($agenda->id) }} " target="_blank" class="label label-primary">Lihat</a>
                     </td></tr>
-                @if(($agenda->status == 'Dijadwalkan') OR ($agenda->status == 'Ditolak' ))
+                
                     <tr><th>Varifikator</th><td>{{$agenda->verifikator}}</td></tr>
-                    <tr><th>Catatan</th><td>{{$agenda->catatan}}</td></tr>
-                @endif
+                    <tr><th>Catatan</th><td colspan='3'>{{$agenda->catatan}}</td></tr>
+                
             </table>
             
         </div>

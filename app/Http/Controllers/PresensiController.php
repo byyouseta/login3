@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DB;
 use \Crypt;
 use DateTime;
 use App\Agenda;
 use App\Pegawai;
 use App\User;
+use App\Tamu;
 
 class PresensiController extends Controller
 {
@@ -41,5 +43,21 @@ class PresensiController extends Controller
 
         $id = Crypt::encrypt($id);
         return redirect("presensi/undangan/$id");
+    }
+
+    public function hadir($id)
+    {
+        $id = Crypt::decrypt($id);
+    	// mengambil data id rapat
+    	$agenda = Agenda::findOrFail($id);
+        $hadir = $agenda->user()
+                ->wherePivot ('presensi_at','!=','')
+                ->get();
+
+        $tamu = Tamu::where('agenda_id',$id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+    	// return data ke view
+    	return view('daftarhadir', ['agenda' => $agenda, 'peserta' => $hadir, 'tamu' => $tamu]);
     }
 }
