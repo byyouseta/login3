@@ -11,6 +11,7 @@ use App\Agenda;
 use App\Pegawai;
 use App\User;
 use App\Tamu;
+use PDF;
 
 class PresensiController extends Controller
 {
@@ -59,5 +60,23 @@ class PresensiController extends Controller
                 ->get();
     	// return data ke view
     	return view('daftarhadir', ['agenda' => $agenda, 'peserta' => $hadir, 'tamu' => $tamu]);
+    }
+
+    public function cetakhadir($id)
+    {
+        $id = Crypt::decrypt($id);
+    	// mengambil data id rapat
+    	$agenda = Agenda::findOrFail($id);
+        $hadir = $agenda->user()
+                ->wherePivot ('presensi_at','!=','')
+                ->get();
+
+        $tamu = Tamu::where('agenda_id',$id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+    	// return data ke view
+    	$pdf = PDF::loadview('daftarhadir_pdf', ['agenda' => $agenda, 'peserta' => $hadir, 'tamu' => $tamu]);
+
+        return $pdf->stream();
     }
 }
