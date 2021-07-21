@@ -20,8 +20,11 @@
 			<div class="box-tools">
 				<form action="/pegawai/cari" method="get">
 				<div class="input-group input-group-sm" style="width: 150px;">
-					<input type="text" name="cari" class="form-control pull-right" placeholder="Search">
-
+					<input type="text" name="cari" class="form-control pull-right" placeholder="Search" 
+					@if (Request::get('cari'))
+						value="{{ Request::get('cari') }}"
+					@endif
+					>
 					<div class="input-group-btn">
 						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 					</div>
@@ -29,6 +32,17 @@
 				</form>
 			</div>
 		</div>
+		@php
+			if (isset($cari)) {
+				# code...
+				$no=1;
+			}
+			else{
+				$halaman = $pegawai->currentPage();
+				$per_page = $pegawai->perPage();
+				$no= (($halaman-1)*$per_page) + 1;
+			}	
+		@endphp
 		<!-- /.box-header -->
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover">
@@ -42,7 +56,7 @@
 				<th style="width: 100px;">Action</th>
 			</tr></thead>
 			<tbody>
-				<?php $no=1; ?>
+				
 				@if(!empty($cari))
 					@foreach($cari as $p)
 					<tr>

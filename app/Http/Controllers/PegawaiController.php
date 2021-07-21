@@ -25,7 +25,7 @@ class PegawaiController extends Controller
     	// mengambil semua data pengguna
     	$pegawai = User::paginate(10);
     	// return data ke view
-    	return view('pegawai', ['pegawai' => $pegawai]);
+    	return view('pegawai.pegawai', ['pegawai' => $pegawai]);
     }
 
     public function cari()
@@ -46,7 +46,7 @@ class PegawaiController extends Controller
             $pegawai->appends(['cari' => $cari]);
 
             // return data ke view
-            return view('pegawai', ['cari' => $pegawai]);
+            return view('pegawai.pegawai', ['cari' => $pegawai]);
         }
         else{
             return redirect('/pegawai');
@@ -57,35 +57,18 @@ class PegawaiController extends Controller
     {
         # code...
         $unit = Unit::all();
-        return view('tambahpegawai', ['unit' => $unit]);
+        return view('pegawai.tambahpegawai', ['unit' => $unit]);
     }
 
     public function tambahpegawai(Request $request){
         
         $this->validate($request,[
-            'username' => 'required|min:6|unique:users',
+            'username' => 'required|min:5|unique:users',
             'name' => 'required',
-            'no_hp' => 'required|min:10|unique:pegawai',
+            'no_hp' => 'required|min:10|max:15|unique:pegawai',
             'email' => 'required|email|unique:users',
             'level' => 'required',
         ]);
-
-        /*if ($errors)
-        {
-            // The Pesan
-            $pesan = 'ada kesalahan dalam menyimpan data';
-            
-        }
-        else{
-            $pesan = 'data berhasil disimpan';
-        }
-        
-
-        User::create([
-    		'nama' => $request->nama,
-    		'alamat' => $request->alamat
-    	]);
-        */
 
         $user = new User;
         $user->username = $request->username;
@@ -118,7 +101,7 @@ class PegawaiController extends Controller
         $id = Crypt::decrypt($id);
         $pegawai = User::find($id);
         $unit = Unit::all();
-        return view('pegawai_edit', ['pegawai' => $pegawai, 'unit' => $unit]);
+        return view('pegawai.pegawai_edit', ['pegawai' => $pegawai, 'unit' => $unit]);
     }
 
     public function update($id, Request $request){

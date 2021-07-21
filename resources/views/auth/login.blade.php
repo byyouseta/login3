@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="{{asset('adminlte/dist/img/LogoRSUP.png')}}">
-    <title>RAPEL Login Page</title>
+    <title>PATRIK (Rapat Elektronik) Login Page</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -37,9 +37,10 @@
                         <img src="{{asset('adminlte/dist/img/Logo.png')}}" alt="logo" />
                     </td>
                     <td>
-                        <a href="#" ><b>R A P E L</b><br>
-                    
-                        <h5>Rapat Elektronik RSUP Surakarta</h5></a></td>
+                        <p class="text-center"><a href="#" ><strong>P A T R I K</strong></a></p>
+                    </td></tr><tr><td>
+                        <h5 class="text-center">Rapat Elektronik <strong>RSUP Surakarta</strong></h5>
+                    </td>
                     </tr>
                 </table>
             </div>
@@ -92,7 +93,7 @@
         </div>
         <!-- /.login-box-body -->
         <div class="login-box-footer">
-            <h5 class="text-center"><strong>Rapel 1.0 <br> Copyright &copy; 2021 IT <a href="https://rsupsurakarta.co.id/">RSUP Surakarta</a><br></strong> 
+            <h5 class="text-center"><strong>PATRIK v 1.7 <br> Copyright &copy; 2021 IT <a href="https://rsupsurakarta.co.id/">RSUP Surakarta</a><br></strong> 
             All rights reserved.
         </div>
     </div>

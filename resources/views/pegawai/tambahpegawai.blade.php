@@ -67,7 +67,7 @@
 
                     <div class="form-group">
                         <label>Unit</label>
-                        <select class="form-control" name="unit">
+                        <select class="form-control select2 " name="unit">
                             <option value="" >Pilih</option>
                             @foreach($unit as $u)
                                 <option value="{{ $u->id}}" {{ old("unit") == $u->id ? "selected" :""}}>{{ $u->nama_unit}}</option>

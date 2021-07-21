@@ -27,7 +27,11 @@
 					<form action="/agenda/cari" method="get">
 						
 						<div class="input-group input-group-sm" style="width: 150px;">
-							<input type="text" name="cari" class="form-control pull-right" placeholder="Search">
+							<input type="text" name="cari" class="form-control pull-right" placeholder="Search"
+							@if (Request::get('cari'))
+								value="{{ Request::get('cari') }}"
+							@endif
+							>
 
 							<div class="input-group-btn">
 								<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -81,6 +85,8 @@
 							
 							@elseif($a->status=="Pengajuan")
 								<span class="label label-warning">{{$a->status}}</span>
+							@elseif($a->status=="Ditolak")
+								<span class="label label-default">{{$a->status}}</span>
 							@else
 								<span class="label label-primary">{{$a->status}}</span>
 							@endif
@@ -95,17 +101,17 @@
 							<a href="/presensi/undangan/{{ Crypt::encrypt($a->id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Presensi">
 								<i class="fa fa-sign-in"></i></a>
 							@if((Auth::user()->name==$a->pic) OR (Auth::user()->level=='admin'))
-								@if($now < $a->tanggal) 
+								{{-- @if($now < $a->tanggal)  --}}
 								<a href="/agenda/edit/{{ Crypt::encrypt($a->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah">
 									<i class="fa fa-edit"></i></a>
 								<a href="/agenda/hapus/{{ Crypt::encrypt($a->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus">
 									<i class="fa fa-trash-o"></i></a>
-								@else
+								{{-- @else
 								<a href="/agenda/edit/{{ Crypt::encrypt($a->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Ubah" disabled>
 									<i class="fa fa-edit"></i></a>
 								<a href="/agenda/hapus/{{ Crypt::encrypt($a->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Hapus" disabled>
 									<i class="fa fa-trash-o"></i></a>
-								@endif
+								@endif --}}
 							@endif
 						</div>
 						</td>

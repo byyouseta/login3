@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="icon" href="{{asset('adminlte/dist/img/LogoRSUP.png')}}">
-  <title>RAPEL RSUP Surakarta</title>
+  <title>PATRIK (Rapat Elektronik) RSUP Surakarta</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
@@ -74,7 +74,7 @@ desired effect
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><img src="{{asset('adminlte/dist/img/LogoRSUP.png')}}" alt="User Image">
-      <b>R A P E L</b>
+      <b>P A T R I K</b>
       <small>RSUP Surakarta</small></span>
     </a>
     <script>
@@ -203,7 +203,18 @@ desired effect
 <script src="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-
+<!-- CK Editor -->
+<script src="{{ asset('adminlte/bower_components/ckeditor/ckeditor.js') }}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{ asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
 
 <script>
   $(function () {

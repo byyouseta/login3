@@ -1,3 +1,6 @@
+@if (!empty(Auth::user()->username))
+        <script>window.location = "/home";</script>
+@endif
 @extends('layouts.app')
 
 @section('content')

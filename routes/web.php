@@ -42,6 +42,7 @@ Route::post('/unit/tambahunit', 'UnitController@tambahunit');
 Route::get('/unit/edit/{id}', 'UnitController@edit');
 Route::put('/unit/update/{id}', 'UnitController@update');
 Route::get('/unit/hapus/{id}', 'UnitController@delete');
+Route::get('/unit/cari', 'UnitController@cari');
 //Ruangan
 Route::get('/ruangan', 'RuanganController@index');
 Route::get('/ruangan/tambah', 'RuanganController@tambah');
@@ -59,16 +60,24 @@ Route::post('/agenda/update/{id}', 'AgendaController@update');
 Route::get('/agenda/cari', 'AgendaController@cari');
 Route::post('/agenda/verifikasi', 'AgendaController@verifikasi');
 //Notulen
+Route::post('/notulen/save/{id}', 'AgendaController@notulen');
 Route::post('/notulen/upload/{id}', 'AgendaController@upload');
 Route::get('/notulen/view/{id}', 'AgendaController@view');
 //Daftar Hadir
 Route::post('/daftarhadir/upload/{id}', 'AgendaController@daftarhadir');
 Route::get('/daftarhadir/view/{id}', 'AgendaController@viewdaftar');
+//Materi
+Route::post('/materi/upload/{id}', 'AgendaController@materi');
+Route::get('/materi/view/{id}', 'AgendaController@viewmateri');
+//Materi
+Route::post('/dokumentasi/upload/{id}', 'AgendaController@dokumentasi');
+Route::get('/dokumentasi/view/{id}', 'AgendaController@viewdokumentasi');
 //Undangan
 Route::get('/agenda/undangan/{id}', 'AgendaController@undangan');
 Route::post('/undangan/tambahpeserta/{id}', 'AgendaController@tambahpeserta');
 Route::get('/undangan/{id}/hapus/{ids}', 'AgendaController@deleteundangan');
 Route::get('/undangan/cari/{id}', 'AgendaController@cariundangan');
+Route::get('/undangan/view/{id}', 'AgendaController@cetakundangan');
 //Presensi
 Route::get('/presensi/undangan/{id}', 'PresensiController@index');
 Route::post('/presensi/peserta/{file}', 'PresensiController@presensi');
@@ -77,3 +86,8 @@ Route::get('/presensi/hadir_pdf/{id}', 'PresensiController@cetakhadir');
 //tamu
 Route::get('/tamu', 'TamuController@index');
 Route::post('/presensitamu', 'TamuController@presensi');
+//about
+Route::get('/about', 'AboutController@index');
+Route::post('/about/upload', 'AboutController@upload');
+Route::get('/about/view/{id}', 'AboutController@view');
+Route::get('/about/delete/{id}', 'AboutController@delete');

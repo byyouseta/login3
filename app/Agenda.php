@@ -11,7 +11,8 @@ class Agenda extends Model
 
     protected $fillable = [
         'nama_agenda', 'tanggal', 'waktu_mulai', 'waktu_selesai', 'ruangan_id', 'status', 
-        'pic', 'notulen', 'keterangan', 'verifikator', 'catatan', 'daftar'
+        'pic', 'notulen', 'keterangan', 'verifikator', 'catatan', 'daftar', 'notulen_ol',
+        'materi'
     ];
 
     public function user()
@@ -27,5 +28,10 @@ class Agenda extends Model
     public function tamu()
     {
     	return $this->hasMany('App\Tamu');
+    }
+    
+    public function gambar()
+    {
+    	return $this->hasMany('App\Gambar');
     }
 }

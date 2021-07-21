@@ -116,6 +116,28 @@
                             </div>
                         @endif
                     </div>
+                    @if ($agenda->status=='Ditolak')
+                       <div class="form-group">
+                            <label>Verifikator</label>
+                            <input type="text" class="form-control" name="verivikator" value="{{ $agenda->verifikator}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea class="form-control" rows="3" name="catatan" disabled>{{ $agenda->catatan}}</textarea>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Status</label>
+                            <span class="label label-default">{{ $agenda->status}}</span>
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                            <input type="checkbox" value="Pengajuan" name="status"> <i class="fa fa-send"></i> Ajukan Kembali
+                            </label>
+                        </div> 
+                    @endif
+                     
                     
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>

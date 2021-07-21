@@ -18,12 +18,12 @@ class RuanganController extends Controller
         session()->put('halaman','master');
 
         $ruangan = Ruangan::all();
-		return view('ruangan',['ruangan'=>$ruangan]);
+		return view('ruangan.ruangan',['ruangan'=>$ruangan]);
 	}
 
     public function tambah(){
         
-		return view('tambahruangan');
+		return view('ruangan.tambahruangan');
 	}
 
     public function tambahruangan(Request $request){
@@ -46,7 +46,7 @@ class RuanganController extends Controller
     {
         $id = Crypt::decrypt($id);
         $ruangan = Ruangan::find($id);
-        return view('ruangan_edit', ['ruangan' => $ruangan]);
+        return view('ruangan.ruangan_edit', ['ruangan' => $ruangan]);
     }
 
     public function update($id, Request $request){

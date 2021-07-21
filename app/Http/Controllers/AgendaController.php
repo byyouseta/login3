@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Input;
 use DB;
 use DateTime;
 use App\Agenda;
+use App\Gambar;
 use App\User;
 use App\Ruangan;
 use App\Pegawai;
+use PDF;
 
 class AgendaController extends Controller
 {
@@ -36,7 +38,7 @@ class AgendaController extends Controller
             ->groupBy( 'agenda.id', 'agenda.nama_agenda', 'agenda.tanggal', 'agenda.waktu_mulai', 
                 'agenda.waktu_selesai', 'agenda.ruangan_id', 'agenda.status', 'agenda.keterangan',
                 'agenda.pic', 'agenda.notulen','agenda.daftar', 'agenda.updated_at', 'agenda.created_at', 
-                'ruangan.nama', 'agenda.verifikator','agenda.catatan')
+                'ruangan.nama', 'agenda.verifikator','agenda.catatan','agenda.notulen_ol','agenda.materi')
             ->orderBy('agenda.status', 'desc')
             ->orderBy('tanggal', 'asc')
             
@@ -60,7 +62,7 @@ class AgendaController extends Controller
             //->sortByDesc('status')
             
     	// return data ke view
-    	return view('agenda', ['agenda' => $query2]);
+    	return view('agenda.agenda', ['agenda' => $query2]);
     }
 
     public function cari()
@@ -81,7 +83,7 @@ class AgendaController extends Controller
             $query2->appends(['cari' => $cari]);
 
             // return data ke view
-            return view('agenda', ['agenda' => $query2]);
+            return view('agenda.agenda', ['agenda' => $query2]);
         }
         else{
             return redirect('/agenda');
@@ -93,7 +95,7 @@ class AgendaController extends Controller
         # code...
         $ruangan = Ruangan::all();
         $pegawai = Auth::user();
-        return view('tambahagenda', ['ruangan' => $ruangan, 'pic' => $pegawai]);
+        return view('agenda.tambahagenda', ['ruangan' => $ruangan, 'pic' => $pegawai]);
     }
 
     public function tambahagenda(Request $request){
@@ -136,7 +138,7 @@ class AgendaController extends Controller
         $id = Crypt::decrypt($id);
         $agenda = Agenda::find($id);
         $ruangan = Ruangan::all();
-        return view('agenda_edit', ['ruangan' => $ruangan,'agenda' => $agenda]);
+        return view('agenda.agenda_edit', ['ruangan' => $ruangan,'agenda' => $agenda]);
     }
 
     public function update($id, Request $request){
@@ -166,6 +168,9 @@ class AgendaController extends Controller
         $agenda->waktu_mulai = $waktu_mulai;
         $agenda->waktu_selesai = $waktu_selesai;
         $agenda->keterangan = $request->keterangan;
+        if ($request->status !="") {
+            $agenda->status= $request->status;
+        }
         
         $agenda->save();
 		
@@ -176,6 +181,10 @@ class AgendaController extends Controller
     {
         $id = Crypt::decrypt($id);
         $agenda = Agenda::find($id);
+        
+        $agenda->user()->detach();
+        $agenda->tamu()->delete();
+        $agenda->gambar()->delete();
         $agenda->delete();
 
         return redirect('/agenda');
@@ -192,25 +201,27 @@ class AgendaController extends Controller
             ->where('presensi', 'sudah')
             ->where('agenda_id', $id)
             ->count();
+        $gambar = Gambar::where('agenda_id','=',$id)->get();
     	// return data ke view
-    	return view('undangan', ['id'=>$id, 'agenda' => $agenda, 'pegawai' => $pegawai, 'presensi' => $peserta]);
+    	return view('agenda.undangan', [
+            'id'=>$id, 
+            'agenda' => $agenda, 
+            'pegawai' => $pegawai, 
+            'presensi' => $peserta,
+            'gambar' => $gambar
+        ]);
     }
 
     public function tambahpeserta($id,Request $request){
         //$this->validate($request,[
         //    'peserta' => 'required|unique:agenda_user,user_id,agenda_id' . $id,
         //]);
-        
+        //UNTUK CEK SUDAH ADA BELUM SI PESERTA DALAM LIST PESERTA
         $cari = Agenda::whereHas('user', function ($query) use($request) {
             $query->where('user_id', '=', $request->peserta)
                 ->where('agenda_id','=', $request->id);
-        })->count();   
+                })->count();   
 
-        //$cari = Agenda::find($id)
-        //    ->where('user_id', '=', $request->peserta)
-        //    ->get();
-
-        
         if(empty($cari)) {
 
             $user = $request->peserta;
@@ -335,6 +346,63 @@ class AgendaController extends Controller
         return redirect("/agenda/undangan/$id");
     }
 
+    public function materi($id, Request $request){
+        $this->validate($request, [
+			'filemateri' => 'required|mimes:pdf,ppt,pptx|max:2048',
+			
+		]);
+        
+        // menyimpan data file yang diupload ke variabel $file
+		$file = $request->file('filemateri');
+        $random = Str::random(12);
+        $extension = $file->getClientOriginalExtension();
+        $nama_file = time()."_".$random.'.'.$extension;
+ 
+		//$nama_file = time()."_".$file->getClientOriginalName();
+ 
+      	// isi dengan nama folder tempat kemana file diupload
+		$tujuan_upload = 'materi';
+		$file->move($tujuan_upload,$nama_file);
+
+        $agenda = Agenda::find($id);
+        $agenda->materi = $nama_file;
+        $agenda->save();
+        
+        $id = Crypt::encrypt($id);
+        return redirect("/agenda/undangan/$id");
+    }
+
+    public function dokumentasi($id, Request $request){
+        $this->validate($request, [
+			'filedokumentasi' => 'required|mimes:jpeg,jpg|max:1024',
+			
+		]);
+        
+        // menyimpan data file yang diupload ke variabel $file
+		$file = $request->file('filedokumentasi');
+        $random = Str::random(12);
+        $extension = $file->getClientOriginalExtension();
+        $nama_file = time()."_".$random.'.'.$extension;
+ 
+		//$nama_file = time()."_".$file->getClientOriginalName();
+ 
+      	// isi dengan nama folder tempat kemana file diupload
+		$tujuan_upload = 'dokumentasi';
+		$file->move($tujuan_upload,$nama_file);
+
+        // $gambars = Gambar::find($id);
+        // $agenda->materi = $nama_file;
+        // $agenda->save();
+
+        $gambars = new Gambar;
+        $gambars->gambar = $nama_file;
+        $gambars->agenda_id = $id;
+        $gambars->save();
+        
+        $id = Crypt::encrypt($id);
+        return redirect("/agenda/undangan/$id");
+    }
+
     public function view($file) {
         // Force download of the file
         $this->file_to_download   = 'notulen_rapat/' . $file;
@@ -347,6 +415,24 @@ class AgendaController extends Controller
     public function viewdaftar($file) {
         // Force download of the file
         $this->file_to_download   = 'daftar_hadir/' . $file;
+        //return response()->streamDownload(function () {
+        //    echo file_get_contents($this->file_to_download);
+        //}, $file.'.pdf');
+        return response()->file($this->file_to_download);
+    }
+
+    public function viewmateri($file) {
+        // Force download of the file
+        $this->file_to_download   = 'materi/' . $file;
+        //return response()->streamDownload(function () {
+        //    echo file_get_contents($this->file_to_download);
+        //}, $file.'.pdf');
+        return response()->file($this->file_to_download);
+    }
+
+    public function viewdokumentasi($file) {
+        // Force download of the file
+        $this->file_to_download   = 'dokumentasi/' . $file;
         //return response()->streamDownload(function () {
         //    echo file_get_contents($this->file_to_download);
         //}, $file.'.pdf');
@@ -366,10 +452,42 @@ class AgendaController extends Controller
         $verifikator = Auth::user()->name;
         $agenda->verifikator = $verifikator;
         $agenda->catatan = $request->get('catatan');
-        $agenda->status = 'Dijadwalkan';
+        $agenda->status = $request->get('status');
         $agenda->save();
         
         $id = Crypt::encrypt($id);
         return redirect("/agenda/undangan/$id");
+    }
+
+    public function notulen($id, Request $request){
+        // $this->validate($request, [
+		// 	'notulen_ol' => 'required',
+			
+		// ]);
+        
+        $agenda = Agenda::find($id);
+        $agenda->notulen_ol = $request->get('notulen_ol');
+        $agenda->save();
+        
+        $id = Crypt::encrypt($id);
+        return redirect("/agenda/undangan/$id");
+    }
+
+    public function cetakundangan($id)
+    {
+        $id = Crypt::decrypt($id);
+    	// mengambil data id rapat
+    	$agenda = Agenda::findOrFail($id);
+        $hadir = $agenda->user()
+                // ->wherePivot ('presensi_at','!=','')
+                ->get();
+
+        // $tamu = Tamu::where('agenda_id',$id)
+        //         ->orderBy('created_at', 'asc')
+        //         ->get();
+    	// return data ke view
+    	$pdf = PDF::loadview('undangan_pdf', ['agenda' => $agenda, 'peserta' => $hadir]);
+
+        return $pdf->stream();
     }
 }

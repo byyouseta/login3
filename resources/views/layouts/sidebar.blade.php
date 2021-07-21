@@ -48,12 +48,18 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="/unit"><i class="fa fa-puzzle-piece"></i> <span>Unit</span></a></li>
-              <li><a href="/pegawai"><i class="fa fa-users"></i> <span>Pegawai</span></a></li>
-              <li><a href="/ruangan"><i class="fa fa-hotel"></i> <span>Ruangan</span></a></li>
+              <li><a href="/unit"><i class="fa fa-users"></i> <span>Unit</span></a></li>
+              <li><a href="/pegawai"><i class="fa fa-user"></i> <span>Pegawai</span></a></li>
+              <li><a href="/ruangan"><i class="fa fa-building-o"></i> <span>Ruangan</span></a></li>
             </ul>
             </li>
         @endif
+        @if(session()->get('halaman')=='about')
+          <li class="active">
+        @else
+          <li>
+        @endif
+          <a href="/about"><i class="fa fa-bullhorn"></i> <span>About</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

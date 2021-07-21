@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Crypt;
+use DB;
 use App\Unit;
 
 class UnitController extends Controller
@@ -17,13 +19,34 @@ class UnitController extends Controller
     public function index(){
         session()->put('halaman','master');
 
-        $unit = Unit::all();
-		return view('unit',['unit'=>$unit]);
+        $unit = Unit::paginate(10);
+		return view('unit.unit',['unit'=>$unit]);
 	}
+
+    public function cari()
+    {
+        $cari = Input::get('cari');
+    	// mengambil semua data pengguna
+        if(!empty($cari)){
+            $unit = DB::table('unit')
+                    ->select('unit.*')
+                    ->where('unit.nama_unit', 'like', '%'.$cari.'%')
+                    ->orWhere('unit.keterangan', 'like', '%'.$cari.'%')
+                    ->orderBy('unit.nama_unit', 'asc')
+                    ->paginate(10);
+            $unit->appends(['cari' => $cari]);
+
+            // return data ke view
+            return view('unit.unit', ['cari' => $unit]);
+        }
+        else{
+            return redirect('/unit');
+        }
+    }
 
     public function tambah(){
         //$unit = Unit::all();
-		return view('tambahunit');
+		return view('unit.tambahunit');
 	}
 
     public function tambahunit(Request $request){
@@ -44,7 +67,7 @@ class UnitController extends Controller
     {
         $id = Crypt::decrypt($id);
         $unit = Unit::find($id);
-        return view('unit_edit', ['unit' => $unit]);
+        return view('unit.unit_edit', ['unit' => $unit]);
     }
 
     public function update($id, Request $request){
